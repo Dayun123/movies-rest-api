@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const movies = require('./movies');
+const users = require('./users');
 
 const connectionOptions = {
   useNewUrlParser: true,
@@ -17,14 +18,15 @@ mongoose.connection.on('error', (error) => {
 
 mongoose.connection.on('connected', async () => {
   console.log('Connected successfully to DB!');
-  
   try {
-    const movieData = await movies.getMovieData();
-    movieData.forEach(async (movie) => await movie.save());
+    const movieData = await movies.createMovieData();
+    await Promise.all(movieData.map((movie) => movie.save()));
+    await Promise.all(users.map((user) => user.save()));
+    console.log('Successfully populated the DB!');
+    mongoose.connection.close();
   } catch (e) {
     console.log(e);
   }
-
 });
 
 
