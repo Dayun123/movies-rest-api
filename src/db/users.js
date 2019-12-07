@@ -8,6 +8,7 @@ for (let i = 0; i < 20; i++) {
     username: faker.internet.userName(),
     password: faker.internet.password(),
     email: faker.internet.email(),
+    apiKey: faker.random.uuid(),
   }));
 };
 
@@ -15,9 +16,7 @@ users.push(new User({
   username: 'root',
   password: 'root',
   email: 'root@gmail.com',
-  apiKey: faker.random.alphaNumeric(),
+  apiKey: faker.random.uuid(),
 }));
-
-console.log(users.pop());
 
 module.exports = users;
