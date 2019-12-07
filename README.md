@@ -159,6 +159,4 @@ To create a movie, send a JSON object in the request body with the format:
 }
 ```
 
-You can add any fields you like, those are the ones that come 'stock' with the app and are required in order to create a new user or movie.
-
 A request to create a resource should have the header `Content-Type: application/json` or it will be rejected.
