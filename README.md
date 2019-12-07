@@ -133,7 +133,7 @@ And here is an example response for a request that doesn't have the correct keys
 ```json
 {
   "statusCode": 400,
-  "statusMessage": "To create a movie the title, overview, and popularity keys are required"
+  "statusMessage": "To create a movie the title, overview, and rating keys are required"
 }
 ```
 
