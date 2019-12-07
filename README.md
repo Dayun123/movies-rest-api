@@ -1,10 +1,10 @@
 # Movies REST API
 
-A simple REST API for querying and performing CRUD operations on a collection of movies and users.
+A simple REST API for querying and performing CRUD operations on a collection of movies and users. 
 
 ## Project Goals
 
-This project is meant to showcase a very simple REST API implementation, using knowledge I picked up from Andrew Mead's [The Complete Node.js Developer Course](https://www.udemy.com/course/the-complete-nodejs-developer-course-2/) Udemy tutorial series. 
+This project is meant to showcase a very simple REST API implementation, using knowledge I picked up from Andrew Mead's [The Complete Node.js Developer Course](https://www.udemy.com/course/the-complete-nodejs-developer-course-2/) Udemy tutorial series, as well as a few other sources.
 
 I'm working through the following concepts in this project:
 
