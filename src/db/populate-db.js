@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const utils = require('../utils');
 const movies = require('./movies');
 const users = require('./users');
 
@@ -22,6 +23,7 @@ mongoose.connection.on('connected', async () => {
     const movieData = await movies.createMovieData();
     await Promise.all(movieData.map((movie) => movie.save()));
     await Promise.all(users.map((user) => user.save()));
+    await utils.createRootApiKeyFile();
     console.log('Successfully populated the DB!');
     mongoose.connection.close();
   } catch (e) {
