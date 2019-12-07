@@ -31,7 +31,6 @@ $ npm install
 Ensure you have a `mongod` instance running, and then populate the db with some stock movies and users:
 
 ```bash
-$ sudo mongod
 $ npm run db
 ```
 
