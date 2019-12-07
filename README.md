@@ -57,11 +57,11 @@ Accepts requests at the following routes (replace `resource` with `users` or `mo
 
 ## API Key
 
-Access to all routes requires an `apiKey` query string parameter, which is setup as `abc123` in the default app. 
+Access to all routes requires an `apiKey` query string parameter. The user routes can be accessed with the `root` api key which is `abc123`. The movie routes can be accessed with the `root` api key or with api keys that are setup on each user model when the db is populated with `npm run db`. 
 
-So, to get a listing of all movies, the following request would be neccessary:
+So, to get a listing of all users, the following request would be neccessary:
 
-`GET http://localhost:3000/movies?apiKey=abc123`
+`GET http://localhost:3000/users?apiKey=abc123`
 
 ## Search
 
