@@ -155,8 +155,10 @@ To create a movie, send a JSON object in the request body with the format:
 {
   "title": "Aladdin",
   "overview": "A kindhearted street urchin named Aladdin embarks on a magical adventure after finding a lamp that releases a wisecracking genie while a power-hungry Grand Vizier vies for the same lamp that has the power to make their deepest wishes come true.",
-  "popularity": 80.17 
+  "rating": 8 
 }
 ```
+
+Users require a `username`, `password`, and `email` while movies require `title`, `overview`, and `rating` fields.
 
 A request to create a resource should have the header `Content-Type: application/json` or it will be rejected.
