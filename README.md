@@ -38,7 +38,7 @@ $ npm run db
 Note the output of this command, as it will include the api key neccessary to access the `root` account.
 
 ```bash
-$ root user created with api key: 45_lafiDzj9
+$ root user created with api key: b67cd746-1647-484b-91cb-65d4a5afa483
 ```
 
 The key will be stored in the root folder of the project at `rootApi.key` as well, in case you forget to copy down the console output of the command above.
@@ -81,7 +81,7 @@ Individual users can only edit their own user account and add movies to the data
 
 To get a listing of all users, the following request would be neccessary using the an example `user` accounts credentials:
 
-`GET http://localhost:3000/users?apiKey=3_dFaie1293`
+`GET http://localhost:3000/users?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae`
 
 To delete a user, the `root` account would make the following request (assuming the auto-generated api key is 45$lafiDzj9):
 
@@ -91,11 +91,11 @@ To delete a user, the `root` account would make the following request (assuming 
 
 To search for a movie, append the `keyword` query string to the `GET /movies` route, like so:
 
-`GET http://localhost:3000/movies?apiKey=3_dFaie1293&keyword=mad+max`
+`GET http://localhost:3000/movies?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae&keyword=mad+max`
 
 The number of results can be filtered with the `numResults` query string parameter:
 
-`GET http://localhost:3000/movies?apiKey=3_dFaie1293&keyword=batman&numResults=3`
+`GET http://localhost:3000/movies?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae&keyword=batman&numResults=3`
 
 ## Response Format
 
@@ -119,7 +119,7 @@ A request to `GET /users/1` would return:
   "username": "Marion24",
   "password": "REW4fs2sVmhtcsm",
   "email": "Sarai84@hotmail.com",
-  "apiKey": "3_dFaie1293"
+  "apiKey": "5de5e9b4-8caa-4907-a4ba-47a60fa172ae"
 }
 ```
 
@@ -134,7 +134,7 @@ While a successful request to `POST /users` would return:
     "username": "Marion24",
     "password": "REW4fs2sVmhtcsm",
     "email": "Sarai84@hotmail.com",
-    "apiKey": "3_dFaie1293"
+    "apiKey": "5de5e9b4-8caa-4907-a4ba-47a60fa172ae"
   }
 }
 ```
