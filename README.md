@@ -75,9 +75,9 @@ To get a listing of all users, the following request would be neccessary using t
 
 `GET http://localhost:3000/users?apiKey=3_dFaie1293`
 
-To delete a user, the `root` account would make the following request:
+To delete a user, the `root` account would make the following request (assuming the auto-generated api key is 45$lafiDzj9):
 
-`DELETE http://localhost:3000/users/5deacae2059db33f2dfa0e4b?apiKey=abc123`
+`DELETE http://localhost:3000/users/5deacae2059db33f2dfa0e4b?apiKey=45$lafiDzj9`
 
 ## Search
 
