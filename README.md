@@ -35,6 +35,14 @@ Ensure you have a `mongod` instance running, and then populate the db with some 
 $ npm run db
 ```
 
+Note the output of this command, as it will include the api key neccessary to access the `root` account.
+
+```bash
+$ root user created with api key: 45_lafiDzj9
+```
+
+The key will be stored in the root folder of the project at `rootApi.key` as well, in case you forget to copy down the console output of the command above.
+
 ## Usage
 
 Start the server:
