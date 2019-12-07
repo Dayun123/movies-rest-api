@@ -10,4 +10,7 @@ module.exports = mongoose.model('User', new mongoose.Schema({
   email: {
     type: String,
   },
+  apiKey: {
+    type: String,
+  },
 }));

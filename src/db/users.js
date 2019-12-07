@@ -11,4 +11,13 @@ for (let i = 0; i < 20; i++) {
   }));
 };
 
+users.push(new User({
+  username: 'root',
+  password: 'root',
+  email: 'root@gmail.com',
+  apiKey: faker.random.alphaNumeric(),
+}));
+
+console.log(users.pop());
+
 module.exports = users;
