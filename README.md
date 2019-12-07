@@ -57,9 +57,9 @@ Accepts requests at the following routes (replace `resource` with `users` or `mo
 
 ## API Key
 
-Access to all routes requires an `apiKey` query string parameter. The user routes can be accessed with the `root` api key which is `abc123`. The movie routes can be accessed with the `root` api key or with api keys that are setup on each user model when the db is populated with `npm run db`. 
+Access to all routes requires an `apiKey` query string parameter. There is a `root` user that can perform CRUD operations on all users and movies, whose api key is `abc123`. Individual users can only edit their own user account and the movies associated with their account. The api key for individual users is auto-generated when `npm run db` populates the db upon installation, or when the `root` user creates a new user account.
 
-So, to get a listing of all users, the following request would be neccessary:
+So, to get a listing of all users, the following request would be neccessary using the `root` accounts credentials:
 
 `GET http://localhost:3000/users?apiKey=abc123`
 
