@@ -67,11 +67,11 @@ So, to get a listing of all users, the following request would be neccessary usi
 
 To search for a movie, append the `keyword` query string to the `GET /movies` route, like so:
 
-`GET http://localhost:3000/movies?apiKey=abc123&keyword=mad+max`
+`GET http://localhost:3000/movies?apiKey=3_dFaie1293&keyword=mad+max`
 
 The number of results can be filtered with the `numResults` query string parameter:
 
-`GET http://localhost:3000/movies?apiKey=abc123&keyword=batman&numResults=3`
+`GET http://localhost:3000/movies?apiKey=3_dFaie1293&keyword=batman&numResults=3`
 
 ## Response Format
 
@@ -94,7 +94,8 @@ A request to `GET /users/1` would return:
   "_id": "5deacae2059db33f2dfa0e4b",
   "username": "Marion24",
   "password": "REW4fs2sVmhtcsm",
-  "email": "Sarai84@hotmail.com"
+  "email": "Sarai84@hotmail.com",
+  "apiKey": "3_dFaie1293"
 }
 ```
 
@@ -108,7 +109,8 @@ While a successful request to `POST /users` would return:
     "_id": "5deacae2059db33f2dfa0e4b",
     "username": "Marion24",
     "password": "REW4fs2sVmhtcsm",
-    "email": "Sarai84@hotmail.com"
+    "email": "Sarai84@hotmail.com",
+    "apiKey": "3_dFaie1293"
   }
 }
 ```
