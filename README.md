@@ -83,9 +83,9 @@ To get a listing of all movies, the following request would be neccessary using 
 
 `GET http://localhost:3000/movies?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae`
 
-To delete a user, the `root` account would make the following request (assuming the auto-generated api key is 45$lafiDzj9):
+To delete a user, the `root` account would make the following request (assuming the auto-generated api key is b67cd746-1647-484b-91cb-65d4a5afa483):
 
-`DELETE http://localhost:3000/users/5deacae2059db33f2dfa0e4b?apiKey=45$lafiDzj9`
+`DELETE http://localhost:3000/users/5deacae2059db33f2dfa0e4b?apiKey=b67cd746-1647-484b-91cb-65d4a5afa483`
 
 ## Search
 
