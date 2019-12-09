@@ -69,15 +69,15 @@ Accepts requests at the following routes (replace `resource` with `users` or `mo
 
 Access to most routes requires an `apiKey` query string parameter, with the sole exception being the `POST /users` route, as it is used to create a new user. 
 
-### Root Account
+#### Root Account
 
 There is a `root` user that can perform CRUD operations on all users and movies, whose api key is auto-generated and printed to the console when the `npm run db` command is issued at installation. 
 
-### User Accounts
+#### User Accounts
 
 Individual users can only edit their own user account and add movies to the database, they cannot update or delete movies once they are stored in the db, only the root account can do that. The api key for individual users is auto-generated when `npm run db` populates the db upon installation, or when a new user account is created.
 
-### Example Requests
+#### Example Requests
 
 To get a listing of all users, the following request would be neccessary using the an example `user` accounts credentials:
 
