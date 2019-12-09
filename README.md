@@ -79,9 +79,9 @@ Individual users can only edit their own user account and add movies to the data
 
 #### Example Requests
 
-To get a listing of all users, the following request would be neccessary using an example `user` accounts credentials:
+To get a listing of all movies, the following request would be neccessary using an example `user` accounts credentials:
 
-`GET http://localhost:3000/users?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae`
+`GET http://localhost:3000/movies?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae`
 
 To delete a user, the `root` account would make the following request (assuming the auto-generated api key is 45$lafiDzj9):
 
