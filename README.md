@@ -79,7 +79,7 @@ Individual users can only edit their own user account and add movies to the data
 
 #### Example Requests
 
-To get a listing of all users, the following request would be neccessary using the an example `user` accounts credentials:
+To get a listing of all users, the following request would be neccessary using an example `user` accounts credentials:
 
 `GET http://localhost:3000/users?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae`
 
