@@ -17,7 +17,7 @@ I'm working through the following concepts in this project:
 As I'm trying to understand the Express framework at a very basic level, I will *NOT* be using:
 
 - Any client-side technology
-- Security best-practices (passwords are stored in db in plaintext)
+- Security best-practices
 - Testing
 
 ## Installation
