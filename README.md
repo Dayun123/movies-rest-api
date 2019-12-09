@@ -9,7 +9,7 @@ This project is meant to showcase a very simple REST API implementation, using k
 I'm working through the following concepts in this project:
 
 - Basic CRUD operations
-- Basic API Authentication
+- Basic API authentication
 - Utilizing Mongoose for working with MongoDB
 
 ## Caveats
