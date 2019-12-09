@@ -7,7 +7,7 @@ module.exports = mongoose.model('Movie', new mongoose.Schema({
   overview: {
     type: String,
   },
-  popularity: {
-    type: Number,
+  releaseDate: {
+    type: Date,
   },
 }));
