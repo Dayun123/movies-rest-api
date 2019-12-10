@@ -43,15 +43,13 @@ exports.create = async (resourceType, resource) => {
     };
   }
 
-  try {
-    const doc = await new Model(resource).save();
-    return {
-      statusCode: 201,
-      statusMessage: `${Model.modelName} created`,
-      [Model.modelName.toLowerCase()]: doc,
-    };
-  } catch (e) {
-    console.log(e);
-  }
+  // this isn't in a try...catch because the caller is expected to provide that logic. If an error is thrown here (Promise rejected or otherwise), it will be passed along to the caller.
+  const doc = await new Model(resource).save();
+
+  return {
+    statusCode: 201,
+    statusMessage: `${Model.modelName} created`,
+    [Model.modelName.toLowerCase()]: doc,
+  };
 
 };
