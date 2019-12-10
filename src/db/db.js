@@ -43,13 +43,24 @@ exports.create = async (resourceType, resource) => {
     };
   }
 
-  // this isn't in a try...catch because the caller is expected to provide that logic. If an error is thrown here (Promise rejected or otherwise), it will be passed along to the caller.
-  const doc = await new Model(resource).save();
+  const doc = new Model(resource);
+
+  try {
+    await doc.validate();
+  } catch (e) {
+    return {
+      statusCode: 400,
+      statusMessage: e.message,
+    };
+  }
+
+  // this isn't in a try...catch because the caller is expected to provide that logic. If an error is thrown here we assume it is something at the database connection level, since validations have already been run on the document to save.
+  const savedDoc = await doc.save();
 
   return {
     statusCode: 201,
     statusMessage: `${Model.modelName} created`,
-    [Model.modelName.toLowerCase()]: doc,
+    [Model.modelName.toLowerCase()]: savedDoc,
   };
 
 };

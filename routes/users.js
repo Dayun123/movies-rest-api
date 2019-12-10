@@ -14,10 +14,11 @@ router.post('/', async (req, res, next) => {
   }
   
   try {
-    const user = await db.create('user', req.body);
-    res.status(user.statusCode).json(user);
+    // this could be a successful response which includes the created user, or some sort of error response. If something goes wrong at the db connection level, an the promise will reject and the catch block will run, but otherwise the db.create() method will return a response we can use.
+    const dbResponse = await db.create('user', req.body);
+    res.status(dbResponse.statusCode).json(dbResponse);
   } catch (e) {
-    // pass along the error to the app-level error-handling middleware
+    // pass along the error to the app-level error-handling middleware, we expect it to be some sort of db connection issue.
     next(e);
   }
 
