@@ -12,6 +12,8 @@ I'm working through the following concepts in this project:
 - Basic API authentication
 - Utilizing Mongoose for working with MongoDB
 
+I will be blogging as I work through creating this app and committing the file to the repo. It can be viewed at [Dev Blog](https://github.com/Dayun123/movies-rest-api/blob/master/dev-blog.md).
+
 ## Caveats
 
 As I'm trying to understand the Express framework at a very basic level, I will *NOT* be using:
