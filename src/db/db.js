@@ -12,7 +12,11 @@ mongoose.connect('mongodb://localhost:27017/moviesRestAPI', connectionOptions)
     console.log('Connection error: ', error);
   });
 
-exports.create = (resourceType, resource) => {
+exports.create = async (resourceType, resource) => {
   const Model = resourceType === 'user' ? User : Movie;
-  return new Model(resource);
+  try {
+    return await new Model(resource).save();
+  } catch (e) {
+    console.log(e);
+  }
 };
