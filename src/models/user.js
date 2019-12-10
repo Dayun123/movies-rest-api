@@ -9,6 +9,7 @@ module.exports = mongoose.model('User', new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    minlength: 5,
   },
   email: {
     type: String,
