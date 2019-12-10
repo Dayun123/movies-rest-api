@@ -11,8 +11,12 @@ router.post('/', async (req, res, next) => {
     });
   }
   try {
-    const createdUser = await db.create('user', req.body);
-    res.json(createdUser);
+    const user = await db.create('user', req.body);
+    res.json({
+      statusCode: 201,
+      statusMessage: "User created",
+      user,
+    });
   } catch (e) {
     res.json({
       statusCode: 500,
