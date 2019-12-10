@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 module.exports = mongoose.model('User', new mongoose.Schema({
   username: {
@@ -12,6 +13,7 @@ module.exports = mongoose.model('User', new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    validate: (email) => validator.isEmail(email),
   },
   apiKey: {
     type: String,
