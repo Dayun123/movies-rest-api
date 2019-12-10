@@ -23,9 +23,28 @@ exports.create = async (resourceType, resource) => {
   } else {
     Model = Movie;
   }
-  
+
+  // ensure that resource has ONLY paths that the Schema accepts
+  const removePaths = ['_id', '__v'];
+
+  const requiredPaths = Object.keys(Model.schema.paths).filter((path) => {
+    return !removePaths.includes(path);
+  });
+
+  if (!Object.keys(resource).every((path) => requiredPaths.includes(path))) {
+    return {
+      statusCode: 400,
+      statusMessage: `Cannot create ${Model.modelName} with the given properties.`,
+    };
+  }
+
   try {
-    return await new Model(resource).save();
+    const doc = await new Model(resource).save();
+    return {
+      statusCode: 201,
+      statusMessage: `${Model.modelName} created`,
+      [Model.modelName.toLowerCase()]: doc,
+    };
   } catch (e) {
     console.log(e);
   }
