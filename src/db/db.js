@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const faker = require('faker');
 const User = require('../models/user');
 const Movie = require('../models/movie');
 
@@ -13,10 +14,20 @@ mongoose.connect('mongodb://localhost:27017/moviesRestAPI', connectionOptions)
   });
 
 exports.create = async (resourceType, resource) => {
-  const Model = resourceType === 'user' ? User : Movie;
+  
+  let Model = {};
+  
+  if (resourceType === 'user') {
+    Model = User;
+    resource.apiKey = faker.random.uuid();
+  } else {
+    Model = Movie;
+  }
+  
   try {
     return await new Model(resource).save();
   } catch (e) {
     console.log(e);
   }
+
 };
