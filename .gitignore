@@ -3,3 +3,6 @@ node_modules/
 
 # auto-generated root api key
 rootApi.key
+
+# config file with dbName
+src/config.json
