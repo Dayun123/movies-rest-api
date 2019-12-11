@@ -28,6 +28,7 @@ mongoose.connection.on('connected', async () => {
     await Promise.all(movieData.map((movie) => movie.save()));
     await Promise.all(users.map((user) => user.save()));
     await utils.createRootApiKeyFile();
+    await utils.createConfigFile(dbName);
     console.log('Successfully populated the DB!');
     mongoose.connection.close();
   } catch (e) {

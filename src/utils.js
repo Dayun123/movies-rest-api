@@ -15,3 +15,12 @@ exports.createRootApiKeyFile = async () => {
     console.log(e);
   }
 };
+
+exports.createConfigFile = async (dbName) => {
+  try {
+    await writeFile('config.js', JSON.stringify({ dbName }));
+    console.log(`config.js created`);
+  } catch (e) {
+    console.log(e);
+  }
+};
