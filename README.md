@@ -31,10 +31,10 @@ $ git clone git@github.com:Dayun123/movies-rest-api.git
 $ npm install
 ```
 
-Ensure you have a `mongod` instance running, and then populate the db with some stock movies and users:
+Ensure you have a `mongod` instance running, and then populate the db with some stock movies and users (you must enter a database name in place of `{dbName}`):
 
 ```bash
-$ npm run db
+$ npm run db {dbName}
 ```
 
 Note the output of this command, as it will include the api key neccessary to access the `root` account.
