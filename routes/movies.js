@@ -16,8 +16,8 @@ router.use((req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const dbResponse = await db.read('movie');
-    res.status(dbResponse.statusCode).json(dbResponse.movies);
+    const movies = await db.read('movie');
+    res.json(movies);
   } catch (e) {
     next(e);
   }
