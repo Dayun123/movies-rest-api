@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const movies = require('./movies');
-const users = require('./users');
+const Movie = require('../models/movie');
+const User = require('../models/user');
 
 const connectionOptions = {
   useNewUrlParser: true,
@@ -16,6 +16,10 @@ mongoose.connection.on('error', (error) => {
   console.log(error);
 });
 
-mongoose.connection.on('connected', () => {
-  console.log('Connected to DB');
+mongoose.connection.on('connected', async () => {
+  console.log('Flushing db...');
+  const deletedMovieData = await Movie.deleteMany({});
+  const deletedUserData = await User.deleteMany({});
+  console.log(`Deleted ${deletedMovieData.deletedCount} movies and ${deletedUserData.deletedCount} users from the db.`);
+  mongoose.connection.close();
 });
