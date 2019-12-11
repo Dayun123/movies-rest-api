@@ -14,7 +14,7 @@ for (let i = 0; i < 20; i++) {
 
 users.push(new User({
   username: 'root',
-  password: 'root',
+  password: 'rootu$er',
   email: 'root@gmail.com',
   apiKey: faker.random.uuid(),
 }));

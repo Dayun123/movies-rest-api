@@ -8,7 +8,11 @@ const connectionOptions = {
   useUnifiedTopology: true,
 };
 
-mongoose.connect('mongodb://localhost:27017/moviesRestAPI', connectionOptions)
+const dbName = process.argv[2];
+
+if (!dbName) return console.log('Must enter a DB name!');
+
+mongoose.connect(`mongodb://localhost:27017/${dbName}`, connectionOptions)
   .catch((error) => {
     console.log('Connection error: ', error);
   });
