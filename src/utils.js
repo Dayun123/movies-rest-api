@@ -6,7 +6,7 @@ const users = require('./db/users');
 const rootUser = users[users.length - 1];
 const writeFile = util.promisify(fs.writeFile);
 const rootUserApiKeyFilePath = path.join(__dirname, '../rootApi.key');
-const configFilePath = path.join(__dirname, '/config.js');
+const configFilePath = path.join(__dirname, '/config.json');
 
 exports.createRootApiKeyFile = async () => {
   try {
