@@ -48,3 +48,7 @@ I had hard-coded in the database name originally, but I decided that when the da
 #### Trim The Fat
 
 I created the app with `express-generator`, and as such there was some unneccessary stuff included in the app that I went ahead and removed, just so I wouldn't have to have the extra clutter.
+
+#### GET /movies
+
+Setup the route-handler for the `GET /movies` route, which requires a valid api key in order to access the Movies collection in the DB. Tested the route with valid and invalid api keys in Postman. Nothing too difficult about this route, and the `GET /users` route will be almost the same, except will be restricted to the root users api key only. 
