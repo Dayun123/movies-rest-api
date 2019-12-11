@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 const User = require('../models/user');
 const Movie = require('../models/movie');
-const dbName = require('../config.json').dbName;
+const dbName = require('../../config.json').dbName;
 
 const connectionOptions = {
   useNewUrlParser: true,

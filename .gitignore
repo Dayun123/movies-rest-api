@@ -5,4 +5,4 @@ node_modules/
 rootApi.key
 
 # config file with dbName
-src/config.json
+config.json
