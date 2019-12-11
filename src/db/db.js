@@ -70,3 +70,8 @@ exports.read = async (resourceType) => {
   const Model = resourceType === 'user' ? User : Movie;
   return await Model.find();
 };
+
+exports.validateApiKey = async (apiKey) => {
+  const results = await User.find({apiKey});
+  return results.length > 0 ? true : false;
+};

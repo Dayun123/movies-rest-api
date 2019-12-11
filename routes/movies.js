@@ -14,6 +14,18 @@ router.use((req, res, next) => {
   }
 });
 
+router.use(async (req, res, next) => {
+  const isValidApiKey = await db.validateApiKey(req.query.apiKey);
+  if (!isValidApiKey) {
+    res.status(401).json({
+      statusCode: 401,
+      statusMessage: 'Must provide a valid API Key',
+    });
+  } else {
+    next();
+  }
+});
+
 router.get('/', async (req, res, next) => {
   try {
     const movies = await db.read('movie');
