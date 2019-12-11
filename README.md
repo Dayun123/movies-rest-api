@@ -110,7 +110,7 @@ Successful responses return a single resource, an array of resources, or a JSON 
 | GET     | /users        | Array of users                              | 
 | GET     | /users/:id    | Single user                                 |
 | POST    | /users        | JSON with `statusCode`, `statusMessage`, and `user` properties  |
-| PATCH   | /users/:id    | JSON with `statusCode`, `statusMessag`, and `user` properties   |
+| PATCH   | /users/:id    | JSON with `statusCode`, `statusMessage`, and `user` properties   |
 | DELETE  | /users/:id    | JSON with `statusCode`, `statusMessage`, and `user` properties  |
 
 A request to `GET /users/1` would return:
