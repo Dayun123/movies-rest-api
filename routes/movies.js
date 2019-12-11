@@ -14,10 +14,13 @@ router.use((req, res, next) => {
   }
 });
 
-router.get('/', (req, res, next) => {
-  res.json([{
-    msg: "Success",
-  }]);
+router.get('/', async (req, res, next) => {
+  try {
+    const dbResponse = await db.read('movie');
+    res.status(dbResponse.statusCode).json(dbResponse.movies);
+  } catch (e) {
+    next(e);
+  }
 });
 
 module.exports = router;

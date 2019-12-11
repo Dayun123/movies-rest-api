@@ -65,3 +65,13 @@ exports.create = async (resourceType, resource) => {
   };
 
 };
+
+exports.read = async (resourceType) => {
+  const Model = resourceType === 'user' ? User : Movie;
+  return {
+    statusCode: 200,
+    [`${Model.modelName.toLowerCase()}s`]: [{
+      dummyData: 'hello',
+    }],
+  };
+};
