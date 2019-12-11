@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "db": "node ./src/db/populate-db.js"
+    "db": "node ./src/db/populate-db.js",
+    "flush-db": "node ./src/db/flush-db.js"
   },
   "dependencies": {
     "bent": "^7.0.4",
