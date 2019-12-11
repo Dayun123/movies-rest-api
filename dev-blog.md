@@ -35,4 +35,16 @@ My development workflow seems to be progressing as such:
 
 I would like to add Newman, a command-line tool for running Postman requests, to the project in the near future. I said I wasn't going to do testing on this project, but it seems like testing the HTTP requests is required, unless I want to pull my hair out manually checking all requests after each edit. 
 
+## 12-10-2019
 
+#### NPM Scripts
+
+I added an npm script that allows the user to delete all users and movies from the database by running `npm run flush-db`. I mainly did this because I'm constantly needing to empty out the database and start over during development, so I wanted a quicker way to accomplish this task.
+
+#### Database Name
+
+I had hard-coded in the database name originally, but I decided that when the database is initially populated I would have the user enter in the database name like so: `npm run db {dbName}`. This required creating a `config.json` file in the root directory that will store the dbName, and then pulling the dbName from that file whenever a connection to the database is needed.
+
+#### Trim The Fat
+
+I created the app with `express-generator`, and as such there was some unneccessary stuff included in the app that I went ahead and removed, just so I wouldn't have to have the extra clutter.
