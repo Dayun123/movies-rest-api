@@ -45,6 +45,12 @@ $ root user created with api key: b67cd746-1647-484b-91cb-65d4a5afa483
 
 The key will be stored in the root folder of the project at `rootApi.key` as well, in case you forget to copy down the console output of the command above.
 
+If you need to destroy all the db data for some reason, a convience script has been provided to do so:
+
+```bash
+$ npm run flush-db
+```
+
 ## Usage
 
 Start the server:
