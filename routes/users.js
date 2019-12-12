@@ -24,4 +24,8 @@ router.post('/', async (req, res, next) => {
 
 });
 
+router.get('/', async (req, res, next) => {
+  res.json([]);
+});
+
 module.exports = router;
