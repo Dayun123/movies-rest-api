@@ -98,4 +98,32 @@ Now, there is more going on, but those two lines are executed right away in no i
 
 I'm still not sure how to best handle db related connection errors, or even what kind of errors to be guarding against for db calls. Currently, I'm just sticking db code in a try...catch, and then if an error is thrown I'm passing it along to app-level middleware and saying it's a 500 error. I'm sure this isn't the best way to handle things, but I haven't come across anything in my studies to show me the correct way to handle this at this point, so I'm going with this method!
 
+## 12-12-2019
+
+#### GET /users
+
+Began implementing the GET /users route today, but spent most of my time working on tests and how to structure route-handler validation. This route should be pretty straightforward to get done, considering I've already implemented db.read() to be model-agnostic.
+
+#### Route-Handler Validation
+
+Created a file validate.js to hold middleware functions for validating api keys, and eventually any other router-level validations. I like this pattern for middleware validation, as it seems cleaner and easier to read than including the validation inside the actual route-handler:
+
+```javascript
+router.use(validate.apiKeyInQS);
+router.use(validate.rootApiKeyMatch);
+
+router.get('/', (req, res, next) => {
+  // pull all users from DB
+});
+```
+
+Will refactor the movie router to use this pattern later.
+
+#### Postman Tests
+
+Realized that my Postman tests were a little shoddy. I know how to check for response status codes, particular values of fields, and return value types in responses. I am not sure how to do more advanced validation of responses, such as ensuring a call to GET /users returns an array of user objects. I know how to do this in JS, just not sure about the syntax using pm.test() at this point. Need to investigate this, as it will make development easier and the app more robust. I said I wasn't going to get bogged down in testing, but this seems like a worthwhile side-step.
+
+#### TODO.md
+
+Created another file that I will use everyday in my development workflow, TODO.md. Currently, I have a bunch of notebooks on my desk with different TODO's for the app. Having this file will allow me to keep the TODOs bundled with the app, and I can strikethrough them as I go and include the relevant commit(s) that compelete the TODOs, which will give me a nice record of how I handled different issues during development.
 
