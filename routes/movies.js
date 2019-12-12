@@ -35,12 +35,12 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-  res.json({ 
-    "_id" : "5df06bc5ef01ea368071c11f", 
-    "title" : "Jurassic Galaxy", 
-    "overview" : "In the near future, a ship of space explorers crash land on an unknown planet. They're soon met with some of their worst fears as they discover the planet is inhabited by monstrous dinosaurs.", 
-    "releaseDate" : "2018-08-20T00:00:00Z",
-  });
+  try {
+    const movie = await db.read('movie', req.params.id);
+    res.json(movie);
+  } catch (e) {
+    next(e);
+  }
 });
 
 module.exports = router;
