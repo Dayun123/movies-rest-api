@@ -52,3 +52,50 @@ I created the app with `express-generator`, and as such there was some unneccess
 #### GET /movies
 
 Setup the route-handler for the `GET /movies` route, which requires a valid api key in order to access the Movies collection in the DB. Tested the route with valid and invalid api keys in Postman. Nothing too difficult about this route, and the `GET /users` route will be almost the same, except will be restricted to the root users api key only. 
+
+## 12-11-2019
+
+#### GET /movies/:id
+
+Setup the route-handler for the `GET /movies/:id` route. There were some interesting problems to solve in this route-handler, namely, the fact that an invalid :id parameter could throw different errors depending on whether or not it was a valid ObjectID. Since mongoose tries to cast id params into an ObjectId, I would get a cast error when trying to search for a movie with an id parameter that was an invalid ObjectId. I found a neat way to solve this by using the `mongoose.Types.ObjectId.isValid()` method to check whether the id was a valid ObjectId BEFORE running the db query and throwing the cast error. 
+
+This error provided me with another challenge though, since I wanted to send the same response for invalid ID's, regardless of whether they were invalid ObjectId's or just an id that didn't exist in the db. To keep the code dry, I decided to create an error object, and then return that if the ObjectID was invalid, or if no movie was returned from the Movie.find() call. Here is the relevant snippet, where `errorObj` is returned before a db call if the id is an invalid ObjectId, or after the db call if there is no doc found with that id:
+
+```javascript
+
+const errorObj = {
+    statusCode: 400,
+    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
+  };
+
+if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
+
+const [ doc ] = await Model.find({ _id });
+
+if (!doc) return errorObj;
+
+return {
+  statusCode: 200,
+  [Model.modelName.toLowerCase()]: doc,
+};
+
+```
+
+I don't think I've used this pattern before, of creating an error object and then using it is different places. It works though!
+
+#### db.read()
+
+I refactored `db.read()` to work for reading all resources or a single resource, depending on whether or not a second parameter (id) was passed in. If no id param is passed in, the method just reads all the documents from the db. If an id parameter is passed in, some validation kicks in and a single document is returned. I'm not sure if this is good practice or not. In one sense, a method should do one thing. So, I should have a readAll method for getting all resources and a readOne() method for getting one resource. On the other hand, it's a simple check to see if an id param was passed in, and to run different logic. The method was 2 lines before, which hardly did anything:
+
+```javascript
+const Model = resourceType === 'user' ? User : Movie;
+return await Model.find();
+```
+
+Now, there is more going on, but those two lines are executed right away in no id is passed in, or some other stuff happens if an id is passed in. 
+
+#### Handling DB Errors
+
+I'm still not sure how to best handle db related connection errors, or even what kind of errors to be guarding against for db calls. Currently, I'm just sticking db code in a try...catch, and then if an error is thrown I'm passing it along to app-level middleware and saying it's a 500 error. I'm sure this isn't the best way to handle things, but I haven't come across anything in my studies to show me the correct way to handle this at this point, so I'm going with this method!
+
+
