@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const util = require('util');
 const db = require('../src/db/db');
+const validate = require('./validate');
 
 const router = express.Router();
 const readFile = util.promisify(fs.readFile);
@@ -29,14 +30,9 @@ router.post('/', async (req, res, next) => {
 
 });
 
-router.use(async (req, res, next) => {
+router.use(validate.apiKeyExistsInQS);
 
-  if (!req.query.apiKey) {
-    return res.status(400).json({
-      statusCode: 400,
-      statusMessage: `Access to ${req.method} ${req.baseUrl} requires an apiKey in the query string`,
-    });
-  }
+router.use(async (req, res, next) => {
   
   const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
   
