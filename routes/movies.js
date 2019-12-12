@@ -12,17 +12,23 @@ router.use(async (req, res, next) => {
     });
   }
 
-  const isValidApiKey = await db.validateApiKey(req.query.apiKey);
+  try {
+   
+    const isValidApiKey = await db.validateApiKey(req.query.apiKey);
 
-  if (!isValidApiKey) {
-    return res.status(401).json({
-      statusCode: 401,
-      statusMessage: 'Must provide a valid API Key',
-    });
-  } 
+    if (!isValidApiKey) {
+      return res.status(401).json({
+        statusCode: 401,
+        statusMessage: 'Must provide a valid API Key',
+      });
+    } 
 
-  next();
-  
+    next();
+    
+  } catch (e) {
+    next(e); 
+  }
+
 });
 
 router.get('/', async (req, res, next) => {
