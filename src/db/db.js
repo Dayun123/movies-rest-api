@@ -74,7 +74,22 @@ exports.read = async (resourceType, _id) => {
     return await Model.find();
   }
 
-  return await Model.find({ _id });
+  const errorObj = {
+    statusCode: 400,
+    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
+  };
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
+
+  const [ doc ] = await Model.find({ _id });
+  
+  if (!doc) return errorObj;
+
+  return {
+    statusCode: 200,
+    [Model.modelName.toLowerCase()]: doc,
+  };
+
 };
 
 exports.validateApiKey = async (apiKey) => {
