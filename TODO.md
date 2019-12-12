@@ -34,3 +34,7 @@ I need to understand how to use Postman tests better. I'm using them now, but I 
 ## Return Users at GET /users
 
 I'm only returning an array with an empty object at the `GET /users` route currently. I need to integrate the db.read() method into this route in my next coding session.
+
+## Tell README.md About This File
+
+Need to include something in the README about the existence of this file and it's purpose.
