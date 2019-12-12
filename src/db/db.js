@@ -66,15 +66,15 @@ exports.create = async (resourceType, resource) => {
 
 };
 
-exports.read = async (resourceType, id) => {
+exports.read = async (resourceType, _id) => {
   
   const Model = resourceType === 'user' ? User : Movie;
   
-  if (!id) {
+  if (!_id) {
     return await Model.find();
   }
 
-  
+  return await Model.find({ _id });
 };
 
 exports.validateApiKey = async (apiKey) => {

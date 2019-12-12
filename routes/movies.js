@@ -36,7 +36,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const movie = await db.read('movie', req.params.id);
+    const [ movie ] = await db.read('movie', req.params.id);
     res.json(movie);
   } catch (e) {
     next(e);
