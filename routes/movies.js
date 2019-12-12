@@ -37,6 +37,12 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const [ movie ] = await db.read('movie', req.params.id);
+    if (!movie) {
+      return res.status(400).json({
+        statusCode: 400,
+        statusMessage: 'No movie found with that id',
+      });
+    }
     res.json(movie);
   } catch (e) {
     next(e);
