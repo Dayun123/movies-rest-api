@@ -1,7 +1,12 @@
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const util = require('util');
 const db = require('../src/db/db');
 
 const router = express.Router();
+const readFile = util.promisify(fs.readFile);
+const rootApiKeyPath = path.join(__dirname, '../rootApi.key');
 
 router.post('/', async (req, res, next) => {
   
@@ -22,6 +27,17 @@ router.post('/', async (req, res, next) => {
     next(e);
   }
 
+});
+
+router.use(async (req, res, next) => {
+  const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
+  if (rootApiKey !== req.query.apiKey) {
+    return res.status(401).json({
+      statusCode: 401,
+      statusMessage: 'Must provide a valid API Key',
+    });
+  }
+  next();
 });
 
 router.get('/', async (req, res, next) => {
