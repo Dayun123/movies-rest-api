@@ -26,6 +26,18 @@ router.post('/', async (req, res, next) => {
 });
 
 router.use(validate.apiKeyExistsInQS);
+
+router.get('/:id', (req, res, next) => {
+  res.json({
+    "_id" : "5df06bc4ef01ea368071c0fa",
+    "username" : "Luigi.Lynch20",
+    "password" : "0EsURt4WPzw8GMP",
+    "email" : "Buddy_Littel@hotmail.com",
+    "apiKey" : "5b5ef0cc-c133-4853-9e6d-76c3524b5e80",
+    "__v" : 0
+  });
+});
+
 router.use(validate.rootApiKeyMatch);
 
 router.get('/', async (req, res, next) => {
@@ -36,5 +48,6 @@ router.get('/', async (req, res, next) => {
     next(e);
   }
 });
+
 
 module.exports = router;
