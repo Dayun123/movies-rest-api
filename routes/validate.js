@@ -57,3 +57,7 @@ exports.rootApiKeyMatch = async (req, res, next) => {
   }
 
 };
+
+exports.getRootApiKey = async (req, res, next) => {
+  return await readFile(rootApiKeyPath, 'utf8');
+};
