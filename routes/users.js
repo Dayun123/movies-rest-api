@@ -29,7 +29,12 @@ router.use(validate.apiKeyExistsInQS);
 router.use(validate.rootApiKeyMatch);
 
 router.get('/', async (req, res, next) => {
-  res.json([{}]);
+  try {
+    const users = await db.read('user');
+    res.json(users);
+  } catch (e) {
+    next(e);
+  }
 });
 
 module.exports = router;
