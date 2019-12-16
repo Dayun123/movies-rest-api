@@ -15,9 +15,9 @@ I want to setup a way to pull a valid user api key from the database and insert 
 
 ~~Since I'm using Nodemon for development, I should included it as a dev depenency in the package.json file.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/9b681233c0ce27a8edd97b5b3ab6d1e9d20062e7)
 
-## Route-Handler Middleware Validation
+## ~~Route-Handler Middleware Validation~~
 
-Refactor movies router to use the `validate.js` file to run validations on incoming requests instead of doing this in the actual route-handler. I like the pattern developed in the users router, where each validation has it's own call to `router.use`:
+~~Refactor movies router to use the `validate.js` file to run validations on incoming requests instead of doing this in the actual route-handler. I like the pattern developed in the users router, where each validation has it's own call to `router.use`:~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/9f64b05890598119353e780e6abd9b5a8dc6f989)
 
 ```javascript
 router.use(validate.apiKeyExistsInQS);
