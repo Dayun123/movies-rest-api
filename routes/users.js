@@ -27,15 +27,16 @@ router.post('/', async (req, res, next) => {
 
 router.use(validate.apiKeyExistsInQS);
 
-router.get('/:id', (req, res, next) => {
-  res.json({
-    "_id" : "5df06bc4ef01ea368071c0fa",
-    "username" : "Luigi.Lynch20",
-    "password" : "0EsURt4WPzw8GMP",
-    "email" : "Buddy_Littel@hotmail.com",
-    "apiKey" : "5b5ef0cc-c133-4853-9e6d-76c3524b5e80",
-    "__v" : 0
-  });
+router.get('/:id', async (req, res, next) => {
+  try {
+    const dbResponse = await db.read('user', req.params.id);
+    if (dbResponse.statusCode !== 200) {
+      return res.status(dbResponse.statusCode).json(dbResponse);
+    }
+    res.json(dbResponse.user);
+  } catch (e) {
+    next(e);
+  }
 });
 
 router.use(validate.rootApiKeyMatch);
