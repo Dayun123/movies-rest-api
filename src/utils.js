@@ -4,6 +4,7 @@ const util = require('util');
 const users = require('./db/users');
 
 const rootUser = users[users.length - 1];
+const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const rootUserApiKeyFilePath = path.join(__dirname, '../rootApi.key');
 
@@ -23,4 +24,8 @@ exports.createConfigFile = async (dbName) => {
   } catch (e) {
     console.log(e);
   }
+};
+
+exports.getRootApiKey = async (req, res, next) => {
+  return await readFile(rootUserApiKeyFilePath, 'utf8');
 };

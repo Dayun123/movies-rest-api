@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../src/db/db');
 const validate = require('./validate');
+const utils = require('../src/utils');
 
 const router = express.Router();
 
@@ -33,6 +34,8 @@ router.get('/:id', async (req, res, next) => {
     if (dbResponse.statusCode !== 200) {
       return res.status(dbResponse.statusCode).json(dbResponse);
     }
+    const rootApiKey = await utils.getRootApiKey();
+    console.log(rootApiKey);
     res.json(dbResponse.user);
   } catch (e) {
     next(e);
