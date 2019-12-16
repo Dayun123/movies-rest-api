@@ -127,3 +127,29 @@ Realized that my Postman tests were a little shoddy. I know how to check for res
 
 Created another file that I will use everyday in my development workflow, TODO.md. Currently, I have a bunch of notebooks on my desk with different TODO's for the app. Having this file will allow me to keep the TODOs bundled with the app, and I can strikethrough them as I go and include the relevant commit(s) that compelete the TODOs, which will give me a nice record of how I handled different issues during development.
 
+## 12-16-2019
+
+#### Completing TODOs
+
+I accomplished these TODOs first-thing today:
+
+- Nodemon Dev Dependency
+- Route-Handler Middleware Validation
+- Postman Tests
+- Return Users at GET /users
+- Tell README.md About This File
+
+I'm leaving the 'Postman API Keys' section undone, but only because that will be kind of a big project I think, and I want to get back to working on the app itself instead of the peripherial stuff. It was nice to just mark all of these things done right away, I think I will try and keep that pattern to my development workflow.
+
+#### Updated Development Workflow
+
+Here's how I'm structuring my development sessions at this point:
+
+1. Read through the README to remind myself of the project's goals
+2. Read through the previous sessions dev blog
+3. Read through the TODOs
+4. Read through the git log from last session
+5. Try and complete any TODOs that are solvable at this point in the project
+6. Begin work on new features
+7. Add TODOs as they come up
+8. Add entries to dev blog during the session and at the end
