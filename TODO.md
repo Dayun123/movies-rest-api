@@ -31,9 +31,9 @@ router.get('/', async (req, res, next) => {
 
 ~~I need to understand how to use Postman tests better. I'm using them now, but I can't do very advanced stuff with them. For example, at the `GET /users` route, I don't know how to check to see if an array of user objects is returned, I only know how to see if an array comes back, and if there are objects in it. Need to find a way to validate that the objects have the correct keys. I know how to do this with array methods, but I'm not sure the correct way to structure the test code using the pm.test() methods.~~
 
-## Return Users at GET /users
+## ~~Return Users at GET /users~~
 
-I'm only returning an array with an empty object at the `GET /users` route currently. I need to integrate the db.read() method into this route in my next coding session.
+~~I'm only returning an array with an empty object at the `GET /users` route currently. I need to integrate the db.read() method into this route in my next coding session.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/1b0ff9ff10349831ab4eda131ab46979f279e2a5)
 
 ## ~~Tell README.md About This File~~
 
