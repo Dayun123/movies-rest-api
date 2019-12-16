@@ -35,6 +35,6 @@ I need to understand how to use Postman tests better. I'm using them now, but I 
 
 I'm only returning an array with an empty object at the `GET /users` route currently. I need to integrate the db.read() method into this route in my next coding session.
 
-## Tell README.md About This File
+## ~~Tell README.md About This File~~
 
 ~~Need to include something in the README about the existence of this file and it's purpose.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/54fc3526256fd8134275b3da355a97a3f49de673)
