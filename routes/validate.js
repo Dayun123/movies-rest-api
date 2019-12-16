@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+const db = require('../src/db/db');
 
 const readFile = util.promisify(fs.readFile);
 const rootApiKeyPath = path.join(__dirname, '../rootApi.key');
@@ -15,6 +16,27 @@ exports.apiKeyExistsInQS = (req, res, next) => {
   next();
 };
 
+exports.apiKeyValid = async (req, res, next) => {
+     
+  try {
+    
+    const isValidApiKey = await db.validateApiKey(req.query.apiKey);
+
+    if (!isValidApiKey) {
+      return res.status(401).json({
+        statusCode: 401,
+        statusMessage: 'Must provide a valid API Key',
+      });
+    }
+  
+    next();
+  
+  } catch (e) {
+    next(e);
+  } 
+
+};
+
 exports.rootApiKeyMatch = async (req, res, next) => {
   
   const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
@@ -25,5 +47,6 @@ exports.rootApiKeyMatch = async (req, res, next) => {
       statusMessage: 'Must provide a valid API Key',
     });
   }
+
   next();
 };
