@@ -11,9 +11,9 @@ I want to setup a way to pull a valid user api key from the database and insert 
 2. When `npm run db {dbName}` is executed, a helper-function will populate the postman.json file with an apiKey from one of the newly created users.
 3. The user will have to import the postman.json file into their version of postman, but maybe this can be done from the command line, as part of installation? May need newman npm package to accomplish this though.
 
-## Nodemon Dev Dependency
+## ~~Nodemon Dev Dependency~~
 
-Since I'm using Nodemon for development, I should included it as a dev depenency in the package.json file.
+~~Since I'm using Nodemon for development, I should included it as a dev depenency in the package.json file.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/9b681233c0ce27a8edd97b5b3ab6d1e9d20062e7)
 
 ## Route-Handler Middleware Validation
 
