@@ -39,14 +39,21 @@ exports.apiKeyValid = async (req, res, next) => {
 
 exports.rootApiKeyMatch = async (req, res, next) => {
   
-  const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
-  
-  if (rootApiKey !== req.query.apiKey) {
-    return res.status(401).json({
-      statusCode: 401,
-      statusMessage: 'Must provide a valid API Key',
-    });
+  try {
+
+    const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
+    
+    if (rootApiKey !== req.query.apiKey) {
+      return res.status(401).json({
+        statusCode: 401,
+        statusMessage: 'Must provide a valid API Key',
+      });
+    }
+
+    next();
+
+  } catch (e) {
+    next(e);
   }
 
-  next();
 };
