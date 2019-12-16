@@ -14,6 +14,8 @@ I'm working through the following concepts in this project:
 
 I will be blogging as I work through creating this app and committing the file to the repo. It can be viewed at [Dev Blog](https://github.com/Dayun123/movies-rest-api/blob/master/dev-blog.md).
 
+In addition to the dev blog, I have a document that will track my TODO's for the project at [TODO](https://github.com/Dayun123/movies-rest-api/blob/master/TODO.md).
+
 ## Caveats
 
 As I'm trying to understand the Express framework at a very basic level, I will *NOT* be using:
