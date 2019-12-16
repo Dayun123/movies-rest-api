@@ -27,9 +27,9 @@ router.get('/', async (req, res, next) => {
   // implement pulling all users from db
 });
 ```
-## Postman Tests
+## ~~Postman Tests~~
 
-I need to understand how to use Postman tests better. I'm using them now, but I can't do very advanced stuff with them. For example, at the `GET /users` route, I don't know how to check to see if an array of user objects is returned, I only know how to see if an array comes back, and if there are objects in it. Need to find a way to validate that the objects have the correct keys. I know how to do this with array methods, but I'm not sure the correct way to structure the test code using the pm.test() methods.
+~~I need to understand how to use Postman tests better. I'm using them now, but I can't do very advanced stuff with them. For example, at the `GET /users` route, I don't know how to check to see if an array of user objects is returned, I only know how to see if an array comes back, and if there are objects in it. Need to find a way to validate that the objects have the correct keys. I know how to do this with array methods, but I'm not sure the correct way to structure the test code using the pm.test() methods.~~
 
 ## Return Users at GET /users
 
