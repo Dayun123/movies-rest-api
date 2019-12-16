@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.read('movie', req.params.id);
-    if (dbResponse.statusCode > 200) {
+    if (dbResponse.statusCode !== 200) {
       return res.status(dbResponse.statusCode).json(dbResponse);
     }
     res.json(dbResponse.movie);
