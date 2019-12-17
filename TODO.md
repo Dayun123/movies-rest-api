@@ -71,9 +71,9 @@ I don't have any logic in place to validate the releaseDate field when a new mov
 
 In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob/master/dev-blog.md#get-usersid) that I was unhappy with how I was handling validation and how I was returning response objects. I need to find a way that consistently sets up response objects for success or failure in the same place. Right now, sometimes it happens in validation middleware, sometimes in db.js, sometimes in the actual route-handler. I think this is confusing.
 
-## GET /users/:id and GET /movies/:id Pre-Request Scripts
+## ~~GET /resource/:id Pre-Request Scripts~~
 
-Currently, in the Postman tests for the GET /users/:id and GET /movies/:id routes, the :id is hard-coded. I should pull this :id from a call to GET /users or GET /movies in a pre-request script instead. I could get all the movies, then pull the id of the first one and use that as the :id param in the request. This would be less error-prone and would allow me to populate the :id field on db creation eventually.
+~~Currently, in the Postman tests for the GET /users/:id and GET /movies/:id routes, the :id is hard-coded. I should pull this :id from a call to GET /users or GET /movies in a pre-request script instead. I could get all the movies, then pull the id of the first one and use that as the :id param in the request. This would be less error-prone and would allow me to populate the :id field on db creation eventually.~~
 
 ## Read User (Valid API Key, Wrong User) Returns Incomplete Response
 
