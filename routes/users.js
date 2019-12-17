@@ -37,18 +37,12 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.delete('/:id', async (req, res, next) => {
-  res.json({
-    statusCode: 200,
-    statusMessage: 'User deleted',
-    user: {
-      "_id" : "5df06bc4ef01ea368071c105", 
-      "username" : "Ambrose.Wyman", 
-      "password" : "FZxXDN88T1eJlzi", 
-      "email" : "Rita76@hotmail.com", 
-      "apiKey" : "f01e872a-7b9f-4ca1-97fd-538dfebe0949", 
-      "__v" : 0,
-    },
-  });
+  try {
+    const dbResponse = await db.delete('user', req.params.id);
+    res.status(dbResponse.statusCode).json(dbResponse);
+  } catch (e) {
+    next(e);
+  }
 });
 
 router.use(validate.rootApiKeyMatch);
