@@ -63,9 +63,9 @@ res.status(dbResponse.statusCode).json(dbResponse);
 
 These should be one route handler, possibly a call to router.param('id'), and then base the db query on the req.method.
 
-## Validate releaseDate in Create Movie
+## ~~Validate releaseDate in Create Movie~~
 
-I don't have any logic in place to validate the releaseDate field when a new movie is created, this should be fixed.
+~~I don't have any logic in place to validate the releaseDate field when a new movie is created, this should be fixed.~~ *(turns out I did have this setup, but wasn't testing for it so I wasn't sure! That's fixed now)*
 
 ## Response Objects Need A Single Point of Creation
 
