@@ -251,3 +251,19 @@ res.status(dbResponse.statusCode).json(dbResponse);
 ```
 
 This leads me to think that I need to refactor the router.get('/:id') and router.delete('/:id') in the users router to be one route-handler, maybe a router.param('id') route-handler is the answer?
+
+## 12-17-2019
+
+#### Polishing The README
+
+I'm constantly finding ways to make the README a little more clear, and accurate. Today I removed the 'testing' caveat, as I'm doing a ton of postman testing, and cleaned up some examples to make them less wordy. Having a README for projects keeps me so much more organized and focused, I'm so glad I started making this an essential part of my development workflow.
+
+#### TODOs
+
+I found a few things that needed fixing right away today, so I made some TODOs and completed a few of them, all of which I found by looking at the postman tests (they really are handy!):
+
+- Validate releaseDate in Create Movie
+- GET /resource/:id Pre-Request Scripts
+- Read User (Valid API Key, Wrong User) Returns Incomplete Response
+
+I ended up having to create a new test for every postman request that recieved an error-response because I wasn't checking that the response object had both statusCode and statusMessage properties. This should've been 101 stuff, but I missed it. Definitely learning the importance of setting up tests to be thorough.
