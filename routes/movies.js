@@ -44,21 +44,10 @@ router.use(validate.rootApiKeyMatch);
 router.delete('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.delete('movie', req.params.id);
-    res.json(dbResponse);
+    res.status(dbResponse.statusCode).json(dbResponse);
   } catch (e) {
     next(e);
   }
-  // res.json({
-  //   statusCode: 200,
-  //   statusMessage: 'Movie deleted',
-  //   movie: {
-  //     "_id" : "5df8376f06ea202b904d799f",
-  //     "title" : "Post Man Movie Title",
-  //     "overview" : "This movie was created as a postman test file",
-  //     "releaseDate" : "2019-12-10T00:00:00Z",
-  //     "__v" : 0
-  //   },
-  // });
 });
 
 module.exports = router;

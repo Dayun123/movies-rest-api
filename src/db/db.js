@@ -95,8 +95,17 @@ exports.read = async (resourceType, _id) => {
 exports.delete = async (resourceType, _id) => {
   
   const Model = resourceType === 'user' ? User : Movie;
-  
+
+  const errorObj = {
+    statusCode: 400,
+    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
+  };
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
+
   const doc = await Model.findByIdAndDelete(_id);
+
+  if (!doc) return errorObj;
 
   return {
     statusCode: 200,
