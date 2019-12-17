@@ -57,3 +57,13 @@ exports.rootApiKeyMatch = async (req, res, next) => {
   }
 
 };
+
+exports.contentTypeJSON = (req, res, next) => {
+  if (req.get('Content-Type') !== 'application/json') {
+    return res.status(400).json({
+      statusCode: 400,
+      statusMessage: `Requests to POST ${req.baseUrl} must have the following header: 'Content-Type: application/json'`,
+    });
+  }
+  next();
+}
