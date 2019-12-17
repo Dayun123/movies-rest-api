@@ -120,7 +120,7 @@ Successful responses return a single resource, an array of resources, or a JSON 
 | PATCH   | /users/:id    | JSON with `statusCode`, `statusMessage`, and `user` properties   |
 | DELETE  | /users/:id    | JSON with `statusCode`, `statusMessage`, and `user` properties  |
 
-A request to `GET /users/1` would return:
+A request to `GET /users/5deacae2059db33f2dfa0e4b` would return:
 
 ```json
 {
