@@ -92,6 +92,20 @@ exports.read = async (resourceType, _id) => {
 
 };
 
+exports.delete = async (resourceType, _id) => {
+  
+  const Model = resourceType === 'user' ? User : Movie;
+  
+  const doc = await Model.findByIdAndDelete(_id);
+
+  return {
+    statusCode: 200,
+    statusMessage: `${Model.modelName} deleted`,
+    [Model.modelName.toLowerCase()]: doc,
+  };
+
+}
+
 exports.validateApiKey = async (apiKey) => {
   const results = await User.find({apiKey});
   return results.length > 0 ? true : false;
