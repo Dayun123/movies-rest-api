@@ -66,3 +66,7 @@ These should be one route handler, possibly a call to router.param('id'), and th
 ## Validate releaseDate in Create Movie
 
 I don't have any logic in place to validate the releaseDate field when a new movie is created, this should be fixed.
+
+## Response Objects Need A Single Point of Creation
+
+In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob/master/dev-blog.md#get-usersid) that I was unhappy with how I was handling validation and how I was returning response objects. I need to find a way that consistently sets up response objects for success or failure in the same place. Right now, sometimes it happens in validation middleware, sometimes in db.js, sometimes in the actual route-handler. I think this is confusing.
