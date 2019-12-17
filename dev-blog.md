@@ -161,3 +161,17 @@ Setup the route-handler for GET /users/:id. I realized as I was setting up this 
 #### API Keys in Postman Tests
 
 I found a better way to setup the API keys in my postman tests, by using environment variables. When I eventually get around to setting up populating the postman requests after the db is populated, I will use these postman environment variables.
+
+#### POST /movies
+
+This route was straightforward, and I didn't really have to do much since I already have the POST /users route setup. The difference for POST /movies is that a valid api key is required in order to create a new movie, but I already have middleware that is setup to do these validations so that was straightforward to implement. I did refactor the content-type check and move it into validate.js. This is the first time in the app that I have validation middleware scoped to a method, but I still prefer separating it from the main route-handler logic like so:
+
+```javascript
+router.post('/', validate.contentTypeJSON);
+
+router.post('/', async (req, res, next) => {
+  // create resource
+});
+```
+
+The ability to basically copy-paste the POST /users route to the POST /movies route shows the advantage of using model-agnostic CRUD operations in the db.js file. I'm really enjoying this design decision thus far.
