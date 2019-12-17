@@ -39,6 +39,11 @@ router.get('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.delete('user', req.params.id);
+    const apiKey = req.query.apiKey;
+    const rootApiKey = await utils.getRootApiKey();
+    if (dbResponse.user.apiKey !== apiKey && rootApiKey !== apiKey) {
+      return res.status(401).json({ statusMessage: 'API Key does not match the user id or the root user'});
+    }
     res.status(dbResponse.statusCode).json(dbResponse);
   } catch (e) {
     next(e);
@@ -55,6 +60,5 @@ router.get('/', async (req, res, next) => {
     next(e);
   }
 });
-
 
 module.exports = router;
