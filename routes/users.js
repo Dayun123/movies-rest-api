@@ -25,9 +25,8 @@ router.get('/:id', async (req, res, next) => {
     if (dbResponse.statusCode !== 200) {
       return res.status(dbResponse.statusCode).json(dbResponse);
     }
-    const apiKey = req.query.apiKey;
-    const rootApiKey = await utils.getRootApiKey();
-    if (dbResponse.user.apiKey !== apiKey && rootApiKey !== apiKey) {
+    const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
+    if (!isValidUser) {
       return res.status(401).json({ statusMessage: 'API Key does not match the user id or the root user'});
     }
     res.json(dbResponse.user);
@@ -39,9 +38,8 @@ router.get('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.delete('user', req.params.id);
-    const apiKey = req.query.apiKey;
-    const rootApiKey = await utils.getRootApiKey();
-    if (dbResponse.user.apiKey !== apiKey && rootApiKey !== apiKey) {
+    const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
+    if (!isValidUser) {
       return res.status(401).json({ statusMessage: 'API Key does not match the user id or the root user'});
     }
     res.status(dbResponse.statusCode).json(dbResponse);

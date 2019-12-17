@@ -67,3 +67,8 @@ exports.contentTypeJSON = (req, res, next) => {
   }
   next();
 }
+
+exports.currentUserOrRootUser = async (apiKey, userApiKey) => {
+  const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
+  return userApiKey === apiKey || rootApiKey === apiKey;
+};

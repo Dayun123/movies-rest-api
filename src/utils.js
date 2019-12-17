@@ -25,7 +25,3 @@ exports.createConfigFile = async (dbName) => {
     console.log(e);
   }
 };
-
-exports.getRootApiKey = async (req, res, next) => {
-  return await readFile(rootUserApiKeyFilePath, 'utf8');
-};
