@@ -27,6 +27,7 @@ router.post('/', async (req, res, next) => {
 });
 
 router.use(validate.apiKeyExistsInQS);
+router.use(validate.apiKeyValid);
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -37,7 +38,7 @@ router.get('/:id', async (req, res, next) => {
     const apiKey = req.query.apiKey;
     const rootApiKey = await utils.getRootApiKey();
     if (dbResponse.user.apiKey !== apiKey && rootApiKey !== apiKey) {
-      return res.status(401).json({ statusMessage: 'Must provide a valid API Key'});
+      return res.status(401).json({ statusMessage: 'API Key does not match the user id or the root user'});
     }
     res.json(dbResponse.user);
   } catch (e) {
