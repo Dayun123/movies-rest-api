@@ -82,3 +82,7 @@ In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob
 ## Pre-Request Script To Grab User API Key
 
 Right now, I have a hard-coded userApiKey environment variable in my Postman tests. This is bad, since that user could be deleted at some point. What I need is a pre-request script that calls GET /users and pulls the apiKey of the first user to populate the envirnoment userApiKey variable in postman. This pre-request script will need to be run on any route that uses userApiKey, which is a lot...
+
+## Root and User API Keys for all relevant Postman Requests
+
+Some postman requests have User API Key versions but no Root API Key versions, and vice-versa. If a given route allows both Root and User api keys, I should be testing this.
