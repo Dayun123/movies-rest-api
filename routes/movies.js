@@ -39,4 +39,18 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  res.json({
+    statusCode: 200,
+    statusMessage: 'Movie deleted',
+    movie: {
+      "_id" : "5df8376f06ea202b904d799f",
+      "title" : "Post Man Movie Title",
+      "overview" : "This movie was created as a postman test file",
+      "releaseDate" : "2019-12-10T00:00:00Z",
+      "__v" : 0
+    },
+  });
+});
+
 module.exports = router;
