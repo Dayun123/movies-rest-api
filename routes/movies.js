@@ -39,6 +39,8 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.use(validate.rootApiKeyMatch);
+
 router.delete('/:id', async (req, res, next) => {
   res.json({
     statusCode: 200,
