@@ -22,7 +22,6 @@ As I'm trying to understand the Express framework at a very basic level, I will 
 
 - Any client-side technology
 - Security best-practices
-- Testing
 
 ## Installation
 
