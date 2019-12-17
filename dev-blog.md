@@ -153,3 +153,7 @@ Here's how I'm structuring my development sessions at this point:
 6. Begin work on new features
 7. Add TODOs as they come up
 8. Add entries to dev blog during the session and at the end
+
+#### GET /users/:id
+
+Setup the route-handler for GET /users/:id. I realized as I was setting up this route handler that I don't really like the app-architecture at this point. Validations are being done sometimes in router.use(), sometimes in db.js, others in the actual route-handler. I'm creating the response object in db.js in some instances, and in others I'm doing it right in the route-handler. I need to find a way to get some better consistency. At this point, I'm not going to focus on that so much though, I just want to get most of the routes built out.
