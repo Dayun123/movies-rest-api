@@ -34,8 +34,11 @@ router.get('/:id', async (req, res, next) => {
     if (dbResponse.statusCode !== 200) {
       return res.status(dbResponse.statusCode).json(dbResponse);
     }
+    const apiKey = req.query.apiKey;
     const rootApiKey = await utils.getRootApiKey();
-    console.log(rootApiKey);
+    if (dbResponse.user.apiKey !== apiKey && rootApiKey !== apiKey) {
+      return res.status(401).json({ statusMessage: 'Must provide a valid API Key'});
+    }
     res.json(dbResponse.user);
   } catch (e) {
     next(e);
