@@ -75,6 +75,6 @@ In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob
 
 ~~Currently, in the Postman tests for the GET /users/:id and GET /movies/:id routes, the :id is hard-coded. I should pull this :id from a call to GET /users or GET /movies in a pre-request script instead. I could get all the movies, then pull the id of the first one and use that as the :id param in the request. This would be less error-prone and would allow me to populate the :id field on db creation eventually.~~
 
-## Read User (Valid API Key, Wrong User) Returns Incomplete Response
+## ~~Read User (Valid API Key, Wrong User) Returns Incomplete Response~~
 
-The postman test `Read User (Valid API Key, Wrong User) Returns Incomplete Response` is supposed to return an object with statusCode and statusMessage properties, but only returns the statusMessage. I should build in a test for this, right now it is passing but not returning a statusCode property.
+~~The postman test `Read User (Valid API Key, Wrong User) Returns Incomplete Response` is supposed to return an object with statusCode and statusMessage properties, but only returns the statusMessage. I should build in a test for this, right now it is passing but not returning a statusCode property.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/80507eb5e978e5cc33d148354286ca8850a45cf6)
