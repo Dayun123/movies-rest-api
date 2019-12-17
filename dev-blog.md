@@ -175,3 +175,55 @@ router.post('/', async (req, res, next) => {
 ```
 
 The ability to basically copy-paste the POST /users route to the POST /movies route shows the advantage of using model-agnostic CRUD operations in the db.js file. I'm really enjoying this design decision thus far.
+
+#### DELETE /movies/:id
+
+This route was easy enough to setup, but I have some unwanted duplication occuring with the error handling for an invalid ID between the db.delete() method and the db.read() method. Both use this same logic:
+
+```javascript
+
+const errorObj = {
+  statusCode: 400,
+  statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
+};
+
+if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
+
+// retrieve the doc (either to return it or the deleted doc)
+
+if (!doc) return errorObj;
+
+// return the correct response
+
+```
+
+The difference lies in the method to retrieve the doc and the response object. I'm wondering if there is a way to refactor this to make the code DRYer, since both methods create() and delete() do similar validations of the id.
+
+#### Pre-Request Scripts in Postman
+
+For the DELETE /movies/:id route, I created a pre-request script that will create a new movie, and then store the id of that movie in an environment variable that will then be used as the id of the movie to delete. This way, I don't have to keep changing the movie id in the request each time I delete a movie. Pretty neat stuff!
+
+*Pre-request script:*
+
+```javascript
+
+const rootApiKey = pm.environment.get("rootApiKey");
+
+pm.sendRequest({
+    url: `http://localhost:3000/movies?apiKey=${rootApiKey}`,
+    method: 'POST',
+    header: 'content-type:application/json',
+    body: {
+        mode: 'raw',
+        raw: JSON.stringify({ 
+            "title": "Post Man Movie Title",
+          "overview": "This movie was created as a postman test file",
+          "releaseDate": "2019-12-10T00:00:00.000Z" 
+        })
+    }
+}, function (err, res) {
+    pm.environment.set("delete_movie_id", res.json().movie._id);
+});
+
+```
+*Delete request route:* http://localhost:3000/movies/{{delete_movie_id}}
