@@ -227,3 +227,27 @@ pm.sendRequest({
 
 ```
 *Delete request route:* http://localhost:3000/movies/{{delete_movie_id}}
+
+#### DELETE /users/:id
+
+This route-handler is nearly identitcal to GET /users/:id. There are the same restrictions (apiKey must be root or the user with the :id), and same general pattern:
+
+```javascript
+
+const dbResponse = await db.performDeleteOrGetQuery();
+
+if (dbResponse.statusCode !== 200) {
+  return res.status(dbResponse.statusCode).json(dbResponse);
+}
+
+const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
+
+if (!isValidUser) {
+  return res.status(401).json({ statusMessage: 'API Key does not match the user id or the root user'});
+}
+
+res.status(dbResponse.statusCode).json(dbResponse);
+
+```
+
+This leads me to think that I need to refactor the router.get('/:id') and router.delete('/:id') in the users router to be one route-handler, maybe a router.param('id') route-handler is the answer?
