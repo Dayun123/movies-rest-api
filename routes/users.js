@@ -81,7 +81,7 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
-router.use(validate.rootApiKeyMatch);
+router.get('/', validate.rootApiKeyMatch);
 
 router.get('/', async (req, res, next) => {
   try {
