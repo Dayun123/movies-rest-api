@@ -96,9 +96,21 @@ exports.id = async (req, res, next, _id) => {
   
 }
 
-exports.currentUserOrRootUser = async (apiKey, userApiKey) => {
+exports.isValidUser = async (req, res, next) => {
+  
+  const Model = req.baseUrl === '/users' ? User : Movie;
+  
+  const [ doc ] = await Model.find({ _id: req.params.id });
   const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
-  return userApiKey === apiKey || rootApiKey === apiKey;
+
+  if (doc.apiKey !== req.query.apiKey && rootApiKey !== req.query.apiKey ) {
+    return res.status(401).json({
+      statusCode: 401, 
+      statusMessage: 'API Key does not match the user id or the root user',
+    });
+  }
+
+  next();
 };
 
 const validatePaths = (Model, resource) => {

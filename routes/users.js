@@ -27,18 +27,13 @@ router.get('/', validate.rootApiKeyMatch, async (req, res, next) => {
   }
 });
 
+// router.param does not accept an array of middleware functions, so you have to call it for each middleware function you want to run against the param.
 router.param('id', validate.id);
+router.param('id', validate.isValidUser);
 
 router.get('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.read('user', req.params.id);
-    const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
-    if (!isValidUser) {
-      return res.status(401).json({
-        statusCode: 401, 
-        statusMessage: 'API Key does not match the user id or the root user',
-      });
-    }
     res.json(dbResponse.user);
   } catch (e) {
     next(e);
@@ -51,13 +46,6 @@ router.patch('/:id', validate.contentTypeJSON, validate.fieldNames, async (req, 
     if (dbResponse.statusCode !== 200) {
       return res.status(dbResponse.statusCode).json(dbResponse);
     }
-    const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
-    if (!isValidUser) {
-      return res.status(401).json({
-        statusCode: 401, 
-        statusMessage: 'API Key does not match the user id or the root user',
-      });
-    }
     res.status(dbResponse.statusCode).json(dbResponse);
   } catch (e) {
     next(e);
@@ -67,13 +55,6 @@ router.patch('/:id', validate.contentTypeJSON, validate.fieldNames, async (req, 
 router.delete('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.delete('user', req.params.id);
-    const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
-    if (!isValidUser) {
-      return res.status(401).json({
-        statusCode: 401, 
-        statusMessage: 'API Key does not match the user id or the root user',
-      });
-    }
     res.status(dbResponse.statusCode).json(dbResponse);
   } catch (e) {
     next(e);
