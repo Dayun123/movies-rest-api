@@ -41,6 +41,16 @@ router.get('/:id', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.update('user', req.params.id, req.body);
+    if (dbResponse.statusCode !== 200) {
+      return res.status(dbResponse.statusCode).json(dbResponse);
+    }
+    const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
+    if (!isValidUser) {
+      return res.status(401).json({
+        statusCode: 401, 
+        statusMessage: 'API Key does not match the user id or the root user',
+      });
+    }
     res.status(dbResponse.statusCode).json(dbResponse);
   } catch (e) {
     next(e);
