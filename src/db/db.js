@@ -16,17 +16,6 @@ mongoose.connect(`mongodb://localhost:27017/${dbName}`, connectionOptions)
     console.log('Connection error: ', error);
   });
 
-const validatePaths = (Model, resource) => {
-
-  // these come stock on Mongoose models, need to strip them from the Model since the passed in resource should not be expected to include these paths
-  const removePaths = ['_id', '__v'];
-
-  const requiredPaths = Object.keys(Model.schema.paths).filter((path) => {
-    return !removePaths.includes(path);
-  });
-
-  return Object.keys(resource).every((path) => requiredPaths.includes(path));
-};
 
 exports.create = async (resourceType, resource) => {
   
@@ -37,13 +26,6 @@ exports.create = async (resourceType, resource) => {
     resource.apiKey = faker.random.uuid();
   } else {
     Model = Movie;
-  }
-
-  if (!validatePaths(Model, resource)) {
-    return {
-      statusCode: 400,
-      statusMessage: `Cannot create ${Model.modelName} with the given properties.`,
-    };
   }
 
   const doc = new Model(resource);
