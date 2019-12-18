@@ -125,7 +125,16 @@ exports.update = async (resourceType, _id, update) => {
     runValidators: true,
   };
 
+  const errorObj = {
+    statusCode: 400,
+    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
+  };
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
+
   const doc = await Model.findByIdAndUpdate(_id, update, updateOptions);
+
+  if (!doc) return errorObj;
 
   return {
     statusCode: 200,
