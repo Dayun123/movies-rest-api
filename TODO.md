@@ -79,10 +79,10 @@ In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob
 
 ~~The postman test `Read User (Valid API Key, Wrong User) Returns Incomplete Response` is supposed to return an object with statusCode and statusMessage properties, but only returns the statusMessage. I should build in a test for this, right now it is passing but not returning a statusCode property.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/80507eb5e978e5cc33d148354286ca8850a45cf6)
 
-## Pre-Request Script To Grab User API Key
+## ~~Pre-Request Script To Grab User API Key~~
 
-Right now, I have a hard-coded userApiKey environment variable in my Postman tests. This is bad, since that user could be deleted at some point. What I need is a pre-request script that calls GET /users and pulls the apiKey of the first user to populate the envirnoment userApiKey variable in postman. This pre-request script will need to be run on any route that uses userApiKey, which is a lot...
+~~Right now, I have a hard-coded userApiKey environment variable in my Postman tests. This is bad, since that user could be deleted at some point. What I need is a pre-request script that calls GET /users and pulls the apiKey of the first user to populate the envirnoment userApiKey variable in postman. This pre-request script will need to be run on any route that uses userApiKey, which is a lot...~~
 
-## Root and User API Keys for all relevant Postman Requests
+## ~~Root and User API Keys for all relevant Postman Requests~~
 
-Some postman requests have User API Key versions but no Root API Key versions, and vice-versa. If a given route allows both Root and User api keys, I should be testing this.
+~~Some postman requests have User API Key versions but no Root API Key versions, and vice-versa. If a given route allows both Root and User api keys, I should be testing this.~~
