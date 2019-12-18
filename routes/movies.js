@@ -9,41 +9,25 @@ router.use(validate.apiKeyExistsInQS);
 router.use(validate.apiKeyValid);
 
 router.get('/', async (req, res, next) => {
-  try {
-    const dbResponse = await db.read('movie');
-    res.status(dbResponse.statusCode).json(dbResponse.movies);
-  } catch (e) {
-    next(e);
-  }
+  const dbResponse = await db.read('movie');
+  res.status(dbResponse.statusCode).json(dbResponse.movies);
 });
 
 router.param('id', validate.id);
 
 router.get('/:id', async (req, res, next) => {
-  try {
-    const dbResponse = await db.read('movie', req.params.id);
-    res.json(dbResponse.movie);
-  } catch (e) {
-    next(e);
-  }
+  const dbResponse = await db.read('movie', req.params.id);
+  res.json(dbResponse.movie);
 });
 
 router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resource, async (req, res, next) => {
-  try {
-    const dbResponse = await db.create('movie', req.body);
-    res.status(dbResponse.statusCode).json(dbResponse);
-  } catch (e) {
-    next(e);
-  }
+  const dbResponse = await db.create('movie', req.body);
+  res.status(dbResponse.statusCode).json(dbResponse);
 });
 
 router.delete('/:id', validate.rootApiKeyMatch, async (req, res, next) => {
-  try {
-    const dbResponse = await db.delete('movie', req.params.id);
-    res.status(dbResponse.statusCode).json(dbResponse);
-  } catch (e) {
-    next(e);
-  }
+  const dbResponse = await db.delete('movie', req.params.id);
+  res.status(dbResponse.statusCode).json(dbResponse);
 });
 
 module.exports = router;
