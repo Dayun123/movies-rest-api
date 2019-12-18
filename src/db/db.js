@@ -75,17 +75,8 @@ exports.read = async (resourceType, _id) => {
     return await Model.find();
   }
 
-  const errorObj = {
-    statusCode: 400,
-    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
-  };
-
-  if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
-
   const [ doc ] = await Model.find({ _id });
   
-  if (!doc) return errorObj;
-
   return {
     statusCode: 200,
     [Model.modelName.toLowerCase()]: doc,
@@ -97,16 +88,7 @@ exports.delete = async (resourceType, _id) => {
   
   const Model = resourceType === 'user' ? User : Movie;
 
-  const errorObj = {
-    statusCode: 400,
-    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
-  };
-
-  if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
-
   const doc = await Model.findByIdAndDelete(_id);
-
-  if (!doc) return errorObj;
 
   return {
     statusCode: 200,
@@ -125,13 +107,6 @@ exports.update = async (resourceType, _id, update) => {
     runValidators: true,
   };
 
-  const errorObj = {
-    statusCode: 400,
-    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
-  };
-
-  if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
-
   if (!validatePaths(Model, update)) {
     return {
       statusCode: 400,
@@ -142,8 +117,6 @@ exports.update = async (resourceType, _id, update) => {
   try {
     
     const doc = await Model.findByIdAndUpdate(_id, update, updateOptions);
-
-    if (!doc) return errorObj;
 
     return {
       statusCode: 200,

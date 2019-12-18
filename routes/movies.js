@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const Movie = require('../src/models/movie');
 const db = require('../src/db/db');
 const validate = require('./validate');
 
@@ -14,6 +16,27 @@ router.get('/', async (req, res, next) => {
   } catch (e) {
     next(e);
   }
+});
+
+router.param('id', async (req, res, next, _id) => {
+
+  const errorObj = {
+    statusCode: 400,
+    statusMessage: `No ${Movie.modelName.toLowerCase()} found with that id`,
+  };
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(errorObj.statusCode).json(errorObj);
+  } 
+
+  const [ doc ] = await Movie.find({ _id });
+  
+  if (!doc) {
+    return res.status(errorObj.statusCode).json(errorObj);
+  }
+
+  next();
+
 });
 
 router.get('/:id', async (req, res, next) => {
