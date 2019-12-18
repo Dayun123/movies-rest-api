@@ -271,3 +271,7 @@ I ended up having to create a new test for every postman request that recieved a
 #### Postman Requests
 
 I noticed that I had hardcoded the userApiKey in my postman requests, so I created some pre-request scripts for relevant postman requests that would pull a valid user id from a call to GET /users. I also created pre-request script that creates an invalidApiKey, instead of hard-coding one. Finally, I made sure that every request that coule be made by the root user and a single user had a version of each request. I didn't do a version for every single valid and invalid request, just the general request to make sure that both types of users had access.
+
+#### UPDATE /users/:id
+
+Got this route working, but I basically just copied and pasted code from similar routes in the app. I always feel like this is not good when I start doing this, so I need to re-evaluate what is going on and see if I can get some of the duplication between CRUD operations down. It seems like all of the /resource/:id routes are doing a lot of similar work, so there must be a way to pull some of this out into separate functions instead of of read/create/update/delete all doing similar things. The db.js file is bad about duplication, as are the route handlers. 
