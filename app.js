@@ -12,11 +12,4 @@ app.use(express.json());
 app.use('/users', usersRouter);
 app.use('/movies', moviesRouter);
 
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    statusCode: 500,
-    statusMessage: err.message,
-  });
-});
-
 module.exports = app;

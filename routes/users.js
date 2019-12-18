@@ -6,7 +6,6 @@ const utils = require('../src/utils');
 
 const router = express.Router();
 
-
 router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resource, async (req, res, next) => {
   const dbResponse = await db.create('user', req.body);
   res.status(dbResponse.statusCode).json(dbResponse);
@@ -26,7 +25,7 @@ router.param('id', validate.isValidUser);
 
 router.get('/:id', async (req, res, next) => {
   const dbResponse = await db.read('user', req.params.id);
-  res.json(dbResponse.user);
+  res.status(dbResponse.statusCode).json(dbResponse.user);
 });
 
 router.patch('/:id', validate.contentTypeJSON, validate.fieldNames, async (req, res, next) => {

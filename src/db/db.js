@@ -16,7 +16,6 @@ mongoose.connect(`mongodb://localhost:27017/${dbName}`, connectionOptions)
     console.log('Connection error: ', error);
   });
 
-
 exports.create = async (resourceType, resource) => {
   
   let Model = {};
@@ -42,7 +41,7 @@ exports.create = async (resourceType, resource) => {
 };
 
 exports.read = async (resourceType, _id) => {
-  
+
   const Model = resourceType === 'user' ? User : Movie;
   
   if (!_id) {
@@ -52,7 +51,7 @@ exports.read = async (resourceType, _id) => {
       [`${Model.modelName.toLowerCase()}s`]: docs,
     };
   }
-
+  
   const [ doc ] = await Model.find({ _id });
   
   return {
