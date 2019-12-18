@@ -18,6 +18,7 @@ router.get('/', validate.rootApiKeyMatch, async (req, res, next) => {
   res.status(dbResponse.statusCode).json(dbResponse.users);
 });
 
+// I need acces to req.baseUrl in the validation middleware, so router.all is prefferred over router.use, as it keeps the baseUrl of the mountpoint.
 router.all('/:id', validate.id, validate.isValidUser);
 
 router.get('/:id', async (req, res, next) => {

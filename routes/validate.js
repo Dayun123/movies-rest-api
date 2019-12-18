@@ -99,7 +99,7 @@ exports.id = async (req, res, next) => {
 exports.isValidUser = async (req, res, next) => {
   
   const Model = req.baseUrl === '/users' ? User : Movie;
-  
+
   const [ doc ] = await Model.find({ _id: req.params.id });
   const rootApiKey = await readFile(rootApiKeyPath, 'utf8');
 
@@ -161,6 +161,4 @@ exports.resource = async (req, res, next) => {
       statusMessage: e.message,
     });
   }
-
-
 }

@@ -17,6 +17,7 @@ router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resourc
   res.status(dbResponse.statusCode).json(dbResponse);
 });
 
+// I need acces to req.baseUrl in the validation middleware, so router.all is prefferred over router.use, as it keeps the baseUrl of the mountpoint.
 router.all('/:id', validate.id);
 
 router.get('/:id', async (req, res, next) => {
