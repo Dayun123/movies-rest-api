@@ -28,7 +28,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', validate.contentTypeJSON, validate.fieldNames, async (req, res, next) => {
+router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resource, async (req, res, next) => {
   try {
     const dbResponse = await db.create('movie', req.body);
     res.status(dbResponse.statusCode).json(dbResponse);

@@ -6,7 +6,7 @@ const utils = require('../src/utils');
 
 const router = express.Router();
 
-router.post('/', validate.contentTypeJSON, validate.fieldNames, async (req, res, next) => {
+router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resource, async (req, res, next) => {
   try {
     const dbResponse = await db.create('user', req.body);
     res.status(dbResponse.statusCode).json(dbResponse);

@@ -30,15 +30,6 @@ exports.create = async (resourceType, resource) => {
 
   const doc = new Model(resource);
 
-  try {
-    await doc.validate();
-  } catch (e) {
-    return {
-      statusCode: 400,
-      statusMessage: e.message,
-    };
-  }
-
   // this isn't in a try...catch because the caller is expected to provide that logic. If an error is thrown here we assume it is something at the database connection level, since validations have already been run on the document to save.
   const savedDoc = await doc.save();
 

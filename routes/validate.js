@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+const faker = require('faker');
 
 const mongoose = require('mongoose');
 const User = require('../src/models/user');
@@ -124,4 +125,30 @@ exports.fieldNames = (req, res, next) => {
   }
 
   next();
+}
+
+exports.resource = async (req, res, next) => {
+
+  let Model = {};
+
+  if (req.baseUrl === '/users') {
+    Model = User;
+    req.body.apiKey = faker.random.uuid();
+  } else {
+    Model = Movie;
+  }
+
+  const doc = new Model(req.body);
+
+  try {
+    await doc.validate();
+    next();
+  } catch (e) {
+    return res.status(400).json({
+      statusCode: 400,
+      statusMessage: e.message,
+    });
+  }
+
+
 }
