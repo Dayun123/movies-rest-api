@@ -7,6 +7,7 @@ const dbName = require('../../config.json').dbName;
 const connectionOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 };
 
 mongoose.connect(`mongodb://localhost:27017/${dbName}`, connectionOptions)
@@ -114,6 +115,25 @@ exports.delete = async (resourceType, _id) => {
   };
 
 }
+
+exports.update = async (resourceType, _id, update) => {
+  
+  const Model = resourceType === 'user' ? User : Movie;
+
+  const updateOptions = {
+    new: true,
+    runValidators: true,
+  };
+
+  const doc = await Model.findByIdAndUpdate(_id, update, updateOptions);
+
+  return {
+    statusCode: 200,
+    statusMessage: `${Model.modelName} updated`,
+    [Model.modelName.toLowerCase()]: doc,
+  };
+
+};
 
 exports.validateApiKey = async (apiKey) => {
   const results = await User.find({apiKey});
