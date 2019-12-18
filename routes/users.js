@@ -18,9 +18,7 @@ router.get('/', validate.rootApiKeyMatch, async (req, res, next) => {
   res.status(dbResponse.statusCode).json(dbResponse.users);
 });
 
-// router.param does not accept an array of middleware functions, so you have to call it for each middleware function you want to run against the param.
-router.param('id', validate.id);
-router.param('id', validate.isValidUser);
+router.all('/:id', validate.id, validate.isValidUser);
 
 router.get('/:id', async (req, res, next) => {
   const dbResponse = await db.read('user', req.params.id);

@@ -73,7 +73,7 @@ exports.contentTypeJSON = (req, res, next) => {
   next();
 }
 
-exports.id = async (req, res, next, _id) => {
+exports.id = async (req, res, next) => {
 
   const Model = req.baseUrl === '/users' ? User : Movie;
 
@@ -82,11 +82,11 @@ exports.id = async (req, res, next, _id) => {
     statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
   };
 
-  if (!mongoose.Types.ObjectId.isValid(_id)) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(errorObj.statusCode).json(errorObj);
   } 
 
-  const [ doc ] = await Model.find({ _id });
+  const [ doc ] = await Model.find({ _id: req.params.id });
   
   if (!doc) {
     return res.status(errorObj.statusCode).json(errorObj);
