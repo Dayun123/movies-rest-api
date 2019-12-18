@@ -1,6 +1,10 @@
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+
+const mongoose = require('mongoose');
+const User = require('../src/models/user');
+const Movie = require('../src/models/movie');
 const db = require('../src/db/db');
 
 const readFile = util.promisify(fs.readFile);
@@ -66,6 +70,29 @@ exports.contentTypeJSON = (req, res, next) => {
     });
   }
   next();
+}
+
+exports.id = async (req, res, next, _id) => {
+
+  const Model = req.baseUrl === '/users' ? User : Movie;
+
+  const errorObj = {
+    statusCode: 400,
+    statusMessage: `No ${Model.modelName.toLowerCase()} found with that id`,
+  };
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(errorObj.statusCode).json(errorObj);
+  } 
+
+  const [ doc ] = await Model.find({ _id });
+  
+  if (!doc) {
+    return res.status(errorObj.statusCode).json(errorObj);
+  }
+
+  next();
+  
 }
 
 exports.currentUserOrRootUser = async (apiKey, userApiKey) => {

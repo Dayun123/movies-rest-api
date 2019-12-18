@@ -1,6 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const User = require('../src/models/user');
+
 const db = require('../src/db/db');
 const validate = require('./validate');
 const utils = require('../src/utils');
@@ -21,26 +20,7 @@ router.post('/', async (req, res, next) => {
 router.use(validate.apiKeyExistsInQS);
 router.use(validate.apiKeyValid);
 
-router.param('id', async (req, res, next, _id) => {
-
-  const errorObj = {
-    statusCode: 400,
-    statusMessage: `No ${User.modelName.toLowerCase()} found with that id`,
-  };
-
-  if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return res.status(errorObj.statusCode).json(errorObj);
-  } 
-
-  const [ doc ] = await User.find({ _id });
-  
-  if (!doc) {
-    return res.status(errorObj.statusCode).json(errorObj);
-  }
-
-  next();
-
-});
+router.param('id', validate.id);
 
 router.get('/:id', async (req, res, next) => {
   try {
