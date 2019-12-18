@@ -86,3 +86,7 @@ In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob
 ## ~~Root and User API Keys for all relevant Postman Requests~~
 
 ~~Some postman requests have User API Key versions but no Root API Key versions, and vice-versa. If a given route allows both Root and User api keys, I should be testing this.~~
+
+## Investigate PUT vs. PATCH
+
+I need to understand the difference between PUT and PATCH, and which one I should be using in this app. For now, I'm using PATCH, as it was what I used in the Udemy course, but I may change this after doing some research.
