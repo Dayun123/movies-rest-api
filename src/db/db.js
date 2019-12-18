@@ -132,15 +132,31 @@ exports.update = async (resourceType, _id, update) => {
 
   if (!mongoose.Types.ObjectId.isValid(_id)) return errorObj;
 
-  const doc = await Model.findByIdAndUpdate(_id, update, updateOptions);
+  if (!validatePaths(Model, update)) {
+    return {
+      statusCode: 400,
+      statusMessage: `Cannot create ${Model.modelName} with the given properties.`,
+    };
+  }
 
-  if (!doc) return errorObj;
+  try {
+    
+    const doc = await Model.findByIdAndUpdate(_id, update, updateOptions);
 
-  return {
-    statusCode: 200,
-    statusMessage: `${Model.modelName} updated`,
-    [Model.modelName.toLowerCase()]: doc,
-  };
+    if (!doc) return errorObj;
+
+    return {
+      statusCode: 200,
+      statusMessage: `${Model.modelName} updated`,
+      [Model.modelName.toLowerCase()]: doc,
+    };
+  
+  } catch (e) {
+    return {
+      statusCode: 400,
+      statusMessage: e.message,
+    };
+  }
 
 };
 
