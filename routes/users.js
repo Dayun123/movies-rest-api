@@ -6,9 +6,7 @@ const utils = require('../src/utils');
 
 const router = express.Router();
 
-router.post('/', validate.contentTypeJSON);
-
-router.post('/', async (req, res, next) => {
+router.post('/', validate.contentTypeJSON, async (req, res, next) => {
   try {
     const dbResponse = await db.create('user', req.body);
     res.status(dbResponse.statusCode).json(dbResponse);
@@ -19,6 +17,15 @@ router.post('/', async (req, res, next) => {
 
 router.use(validate.apiKeyExistsInQS);
 router.use(validate.apiKeyValid);
+
+router.get('/', validate.rootApiKeyMatch, async (req, res, next) => {
+  try {
+    const users = await db.read('user');
+    res.json(users);
+  } catch (e) {
+    next(e);
+  }
+});
 
 router.param('id', validate.id);
 
@@ -41,9 +48,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.patch('/:id', validate.contentTypeJSON);
-
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', validate.contentTypeJSON, async (req, res, next) => {
   try {
     const dbResponse = await db.update('user', req.params.id, req.body);
     if (dbResponse.statusCode !== 200) {
@@ -76,17 +81,6 @@ router.delete('/:id', async (req, res, next) => {
       });
     }
     res.status(dbResponse.statusCode).json(dbResponse);
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.get('/', validate.rootApiKeyMatch);
-
-router.get('/', async (req, res, next) => {
-  try {
-    const users = await db.read('user');
-    res.json(users);
   } catch (e) {
     next(e);
   }

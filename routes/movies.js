@@ -31,9 +31,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', validate.contentTypeJSON);
-
-router.post('/', async (req, res, next) => {
+router.post('/', validate.contentTypeJSON, async (req, res, next) => {
   try {
     const dbResponse = await db.create('movie', req.body);
     res.status(dbResponse.statusCode).json(dbResponse);
@@ -42,9 +40,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.use(validate.rootApiKeyMatch);
-
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', validate.rootApiKeyMatch, async (req, res, next) => {
   try {
     const dbResponse = await db.delete('movie', req.params.id);
     res.status(dbResponse.statusCode).json(dbResponse);
