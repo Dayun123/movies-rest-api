@@ -267,3 +267,7 @@ I found a few things that needed fixing right away today, so I made some TODOs a
 - Read User (Valid API Key, Wrong User) Returns Incomplete Response
 
 I ended up having to create a new test for every postman request that recieved an error-response because I wasn't checking that the response object had both statusCode and statusMessage properties. This should've been 101 stuff, but I missed it. Definitely learning the importance of setting up tests to be thorough.
+
+#### Postman Requests
+
+I noticed that I had hardcoded the userApiKey in my postman requests, so I created some pre-request scripts for relevant postman requests that would pull a valid user id from a call to GET /users. I also created pre-request script that creates an invalidApiKey, instead of hard-coding one. Finally, I made sure that every request that coule be made by the root user and a single user had a version of each request. I didn't do a version for every single valid and invalid request, just the general request to make sure that both types of users had access.
