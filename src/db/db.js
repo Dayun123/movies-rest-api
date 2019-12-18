@@ -82,11 +82,12 @@ exports.update = async (resourceType, _id, update) => {
 
   const updateOptions = {
     new: true,
-    runValidators: true,
+    runValidators: true,    
   };
 
   try {
     
+    // we have to wrap this in a try..catch because the validators will be run against the updates and will throw an error if something goes wrong.
     const doc = await Model.findByIdAndUpdate(_id, update, updateOptions);
 
     return {

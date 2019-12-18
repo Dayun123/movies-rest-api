@@ -43,9 +43,6 @@ router.get('/:id', async (req, res, next) => {
 router.patch('/:id', validate.contentTypeJSON, validate.fieldNames, async (req, res, next) => {
   try {
     const dbResponse = await db.update('user', req.params.id, req.body);
-    if (dbResponse.statusCode !== 200) {
-      return res.status(dbResponse.statusCode).json(dbResponse);
-    }
     res.status(dbResponse.statusCode).json(dbResponse);
   } catch (e) {
     next(e);
