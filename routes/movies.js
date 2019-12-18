@@ -17,7 +17,7 @@ router.param('id', validate.id);
 
 router.get('/:id', async (req, res, next) => {
   const dbResponse = await db.read('movie', req.params.id);
-  res.json(dbResponse.movie);
+  res.status(dbResponse.statusCode).json(dbResponse.movie);
 });
 
 router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resource, async (req, res, next) => {
