@@ -5,8 +5,7 @@ const validate = require('./validate');
 
 const router = express.Router();
 
-router.use(validate.apiKeyExistsInQS);
-router.use(validate.apiKeyValid);
+router.use(validate.apiKeyExistsInQS, validate.apiKeyValid);
 
 router.get('/', async (req, res, next) => {
   const dbResponse = await db.read('movie');

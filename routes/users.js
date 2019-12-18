@@ -11,8 +11,7 @@ router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resourc
   res.status(dbResponse.statusCode).json(dbResponse);
 });
 
-router.use(validate.apiKeyExistsInQS);
-router.use(validate.apiKeyValid);
+router.use(validate.apiKeyExistsInQS, validate.apiKeyValid);
 
 router.get('/', validate.rootApiKeyMatch, async (req, res, next) => {
   const dbResponse = await db.read('user');
