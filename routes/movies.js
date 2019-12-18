@@ -10,8 +10,8 @@ router.use(validate.apiKeyValid);
 
 router.get('/', async (req, res, next) => {
   try {
-    const movies = await db.read('movie');
-    res.json(movies);
+    const dbResponse = await db.read('movie');
+    res.status(dbResponse.statusCode).json(dbResponse.movies);
   } catch (e) {
     next(e);
   }

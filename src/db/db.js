@@ -46,7 +46,11 @@ exports.read = async (resourceType, _id) => {
   const Model = resourceType === 'user' ? User : Movie;
   
   if (!_id) {
-    return await Model.find();
+    const docs = await Model.find();
+    return {
+      statusCode: 200,
+      [`${Model.modelName.toLowerCase()}s`]: docs,
+    };
   }
 
   const [ doc ] = await Model.find({ _id });

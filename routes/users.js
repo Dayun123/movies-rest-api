@@ -20,8 +20,8 @@ router.use(validate.apiKeyValid);
 
 router.get('/', validate.rootApiKeyMatch, async (req, res, next) => {
   try {
-    const users = await db.read('user');
-    res.json(users);
+    const dbResponse = await db.read('user');
+    res.status(dbResponse.statusCode).json(dbResponse.users);
   } catch (e) {
     next(e);
   }
