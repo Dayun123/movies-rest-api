@@ -108,13 +108,6 @@ exports.update = async (resourceType, _id, update) => {
     runValidators: true,
   };
 
-  if (!validatePaths(Model, update)) {
-    return {
-      statusCode: 400,
-      statusMessage: `Cannot create ${Model.modelName} with the given properties.`,
-    };
-  }
-
   try {
     
     const doc = await Model.findByIdAndUpdate(_id, update, updateOptions);
