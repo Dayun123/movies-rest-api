@@ -32,9 +32,6 @@ router.param('id', validate.id);
 router.get('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.read('user', req.params.id);
-    if (dbResponse.statusCode !== 200) {
-      return res.status(dbResponse.statusCode).json(dbResponse);
-    }
     const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
     if (!isValidUser) {
       return res.status(401).json({
@@ -70,9 +67,6 @@ router.patch('/:id', validate.contentTypeJSON, async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     const dbResponse = await db.delete('user', req.params.id);
-    if (dbResponse.statusCode !== 200) {
-      return res.status(dbResponse.statusCode).json(dbResponse);
-    }
     const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
     if (!isValidUser) {
       return res.status(401).json({
