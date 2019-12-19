@@ -25,6 +25,11 @@ router.get('/:id', async (req, res, next) => {
   res.status(dbResponse.statusCode).json(dbResponse.movie);
 });
 
+router.patch('/:id', validate.contentTypeJSON, validate.fieldNames, validate.rootApiKeyMatch, async (req, res, next) => {
+  const dbResponse = await db.update('movie', req.params.id, req.body);
+  res.status(dbResponse.statusCode).json(dbResponse);
+});
+
 router.delete('/:id', validate.rootApiKeyMatch, async (req, res, next) => {
   const dbResponse = await db.delete('movie', req.params.id);
   res.status(dbResponse.statusCode).json(dbResponse);
