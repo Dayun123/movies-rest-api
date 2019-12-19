@@ -39,29 +39,29 @@ router.get('/', async (req, res, next) => {
 
 ~~Need to include something in the README about the existence of this file and it's purpose.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/54fc3526256fd8134275b3da355a97a3f49de673)
 
-## Refactor Users Router
+## ~~Refactor Users Router~~
 
-I'm using the same pattern in the GET /users/:id and DELETE users/:id route-handlers:
+~~I'm using the same pattern in the GET /users/:id and DELETE users/:id route-handlers:~~
 
 ```javascript
 
-const dbResponse = await db.performDeleteOrGetQuery();
+// const dbResponse = await db.performDeleteOrGetQuery();
 
-if (dbResponse.statusCode !== 200) {
-  return res.status(dbResponse.statusCode).json(dbResponse);
-}
+// if (dbResponse.statusCode !== 200) {
+//   return res.status(dbResponse.statusCode).json(dbResponse);
+// }
 
-const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
+// const isValidUser = await validate.currentUserOrRootUser(req.query.apiKey, dbResponse.user.apiKey);
 
-if (!isValidUser) {
-  return res.status(401).json({ statusMessage: 'API Key does not match the user id or the root user'});
-}
+// if (!isValidUser) {
+//   return res.status(401).json({ statusMessage: 'API Key does not match the user id or the root user'});
+// }
 
-res.status(dbResponse.statusCode).json(dbResponse);
+// res.status(dbResponse.statusCode).json(dbResponse);
 
 ```
 
-These should be one route handler, possibly a call to router.param('id'), and then base the db query on the req.method.
+~~These should be one route handler, possibly a call to router.param('id'), and then base the db query on the req.method.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/6ee0656a047c4a62cf780793a47ce91694de4a00)
 
 ## ~~Validate releaseDate in Create Movie~~
 
