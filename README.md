@@ -63,6 +63,10 @@ $ DEBUG=movies-rest-api:* npm run dev
 
 All requests can then be made to the base url: `http://localhost:3000`
 
+## Postman Tests
+
+The app comes bundled with a file at `tests/movies-rest-api.postman_collection.json` that has 60 mock requests along with 179 tests to ensure everything is hooked-up correctly after installation. You will need to import this collection into Postman, and create an environment variable in Postman called `rootApiKey` which you can pull from the `rootApi.key` file in the root directory of the app.
+
 ## Routes
 
 Accepts requests at the following routes (replace `resource` with `users` or `movies`):
