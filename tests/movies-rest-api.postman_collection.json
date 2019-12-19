@@ -1,0 +1,5098 @@
+{
+	"info": {
+		"_postman_id": "7297c91f-cd52-48cd-b7b8-6488e27db6d2",
+		"name": "Movies Rest API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Requests",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('User created');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"postmanUser\",\n\t\"password\": \"p0$tm@an\",\n\t\"email\": \"postman@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Invalid Password Length)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "60061198-59de-4844-b99a-187dde75e204",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('User validation failed: password: Path `password` (`p0$t`) is shorter than the minimum allowed length (5).');",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"postmanUser\",\n\t\"password\": \"p0$t\",\n\t\"email\": \"postman@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Invalid Email)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6b3c609-9f53-4605-a205-21fa7e68a3c5",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('User validation failed: email: Validator failed for path `email` with value `notAnEmail`');",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"postmanUser\",\n\t\"password\": \"p0$tm@an\",\n\t\"email\": \"notAnEmail\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Missing Field)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5d9c306d-6def-439f-9b19-28ddce48c28e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('User validation failed: username: Path `username` is required.');",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"password\": \"p0$tm@an\",\n\t\"email\": \"postman@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Invalid Field Name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1500fe78-7257-419b-a40a-166d124e1bd6",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Cannot create User with the given properties.');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"postmanUser\",\n\t\"password\": \"p0$tm@an\",\n\t\"email\": \"postman@gmail.com\",\n\t\"invalidField\": \"nope\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Invalid Content-Type)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ccf47100-58da-4b0f-a0d5-1dae3644e609",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Requests to POST /users must have the following header: \\'Content-Type: application/json\\'');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"postmanUser\",\n\t\"password\": \"p0$tm@an\",\n\t\"email\": \"postman@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"pm.test(\"Check response contains correct type of data\", function () {",
+									"    var firstUser = pm.response.json()[0];",
+									"    pm.expect(firstUser).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()[0]).to.have.all.keys('_id', 'username', 'email', 'password', 'apiKey', '__v');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9b5df561-5e5e-4081-acb3-6bbe19d84807",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Users (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Users (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to GET /users requires an apiKey in the query string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User (User API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('_id', 'username', 'password', 'email', 'apiKey', '__v');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{read_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{read_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User (Root API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('_id', 'username', 'password', 'email', 'apiKey', '__v');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bb8c7edd-215a-493e-b47e-8c23be0b00c4",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_user_id\", res.json()[0]._id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{read_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{read_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User (Valid API Key, Wrong User)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('API Key does not match the user id or the root user');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "415569d5-ba8d-4c77-b6a4-9da2311ff294",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"invalidUserApiKey\", res.json()[1].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidUserApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{read_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{read_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6e3025b8-3e46-45f7-88cb-811222f8d616",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_user_id\", res.json()[0]._id);",
+									"    let tempApiKey = res.json()[0].apiKey.split('');",
+									"    tempApiKey[0] = 'a';",
+									"    tempApiKey[1] = 'b';",
+									"    pm.environment.set(\"invalidApiKey\", tempApiKey.join(''));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{read_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{read_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to GET /users requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "780c801e-a18a-45b5-8f22-0128592c23dc",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_user_id\", res.json()[0]._id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{read_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{read_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('No user found with that id');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "86d538f9-99f8-48b3-987d-e9ed8844affc",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/5df06ba4ef01ea368071c0fa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"5df06ba4ef01ea368071c0fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Root API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage', 'user');",
+									"});",
+									"pm.test(\"Status message correct\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.statusMessage).to.eql('User updated');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"{{username}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (User API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage', 'user');",
+									"});",
+									"pm.test(\"Status message correct\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.statusMessage).to.eql('User updated');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"updateUserApiKey\", res.json()[0].apiKey);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"{{username}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Invalid Content-Type)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Requests to PATCH /users must have the following header: \\'Content-Type: application/json\\'');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"updateUserApiKey\", res.json()[0].apiKey);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Invalid Password Length)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql(\"Validation failed: password: Path `password` (`p0$t`) is shorter than the minimum allowed length (5).\");",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"updateUserApiKey\", res.json()[0].apiKey);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"password\" : \"p0$t\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Invalid Email)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql(\"Validation failed: email: Validator failed for path `email` with value `invalid`\");",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"updateUserApiKey\", res.json()[0].apiKey);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\" : \"invalid\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Invalid Field Name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Cannot create User with the given properties.');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"updateUserApiKey\", res.json()[0].apiKey);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"invalidField\" : \"{{username}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Valid API Key, Wrong User)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('API Key does not match the user id or the root user');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"updateUserApiKeyInvalid\", res.json()[1].apiKey);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKeyInvalid}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"{{username}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username));",
+									"    let tempApiKey = res.json()[0].apiKey.split('');",
+									"    tempApiKey[0] = 'a';",
+									"    tempApiKey[1] = 'b';",
+									"    pm.environment.set(\"invalidApiKey\", tempApiKey.join(''));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"{{username}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to PATCH /users requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_user_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"{{username}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/{{update_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{update_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('No user found with that id');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomizeUsername = (username) => {",
+									"  let tempUsername = username.split('');",
+									"  if (tempUsername[0] < 'a') {",
+									"    tempUsername[0] = 'a';",
+									"    return tempUsername.join('');",
+									"  }",
+									"  if (tempUsername[0] > 'l') {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) - 1);",
+									"  } else if (tempUsername[0] === 'l') {",
+									"    tempUsername[0] = 'a';",
+									"  } else {",
+									"    tempUsername[0] = String.fromCharCode(username.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempUsername.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"updateUserApiKey\", res.json()[0].apiKey);",
+									"    pm.environment.set(\"username\", randomizeUsername(res.json()[0].username)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"{{username}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/5df06ba4ef01ea368071c0fa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"5df06ba4ef01ea368071c0fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Root API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('User deleted');",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json().user).to.have.all.keys('_id', 'username', 'password', 'email', 'apiKey', '__v');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest({",
+									"    url: `http://localhost:3000/users?apiKey=${rootApiKey}`,",
+									"    method: 'POST',",
+									"    header: 'content-type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ ",
+									"            \"username\": \"randomUserNamePoSTMAN\",",
+									"\t        \"password\": \"postmanP@@SS\",",
+									"\t        \"email\": \"postman@gmail.com\" ",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"delete_user_id\", res.json().user._id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{delete_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{delete_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (User API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('User deleted');",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json().user).to.have.all.keys('_id', 'username', 'password', 'email', 'apiKey', '__v');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest({",
+									"    url: `http://localhost:3000/users?apiKey=${rootApiKey}`,",
+									"    method: 'POST',",
+									"    header: 'content-type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ ",
+									"            \"username\": \"randomUserNamePoSTMAN\",",
+									"\t        \"password\": \"postmanP@@SS\",",
+									"\t        \"email\": \"postman@gmail.com\" ",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"delete_user_id\", res.json().user._id);",
+									"    pm.environment.set(\"delete_user_api_key\", res.json().user.apiKey);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{delete_user_api_key}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{delete_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{delete_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('API Key does not match the user id or the root user');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest({",
+									"    url: `http://localhost:3000/users?apiKey=${rootApiKey}`,",
+									"    method: 'POST',",
+									"    header: 'content-type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ ",
+									"            \"username\": \"randomUserNamePoSTMAN\",",
+									"\t        \"password\": \"postmanP@@SS\",",
+									"\t        \"email\": \"postman@gmail.com\" ",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"delete_user_id\", res.json().user._id);",
+									"});",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function(err, res) {",
+									"    pm.environment.set(\"invalidApiKey\", res.json()[0].apiKey);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{delete_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{delete_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to DELETE /users requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest({",
+									"    url: `http://localhost:3000/users?apiKey=${rootApiKey}`,",
+									"    method: 'POST',",
+									"    header: 'content-type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ ",
+									"            \"username\": \"randomUserNamePoSTMAN\",",
+									"\t        \"password\": \"postmanP@@SS\",",
+									"\t        \"email\": \"postman@gmail.com\" ",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"delete_user_id\", res.json().user._id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/{{delete_user_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"{{delete_user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('No user found with that id');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/5df06ba4ef01ea368071c101",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"5df06ba4ef01ea368071c101"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Invalid ID: Invalid ObjectID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('No user found with that id');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Movie Requests",
+			"item": [
+				{
+					"name": "Create Movie (User Api Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Movie created');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c5066d16-3908-47f2-b93f-bb101ff25b0f",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post Man Movie Title\",\n\t\"overview\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"2019-12-10T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Movie (Root Api Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Movie created');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c5066d16-3908-47f2-b93f-bb101ff25b0f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post Man Movie Title\",\n\t\"overview\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"2019-12-10T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Movie (Invalid Release Date)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Movie validation failed: releaseDate: Cast to Date failed for value \\\"invalid\\\" at path \\\"releaseDate\\\"');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "60ab50dd-f19b-46b1-a39f-d3a88a160a5a",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post Man Movie Title\",\n\t\"overview\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"invalid\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Movie (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "586d256b-d249-42e1-b25c-c4210684a2cf",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    let tempApiKey = res.json()[0].apiKey.split('');",
+									"    tempApiKey[0] = 'a';",
+									"    tempApiKey[1] = 'b';",
+									"    pm.environment.set(\"invalidApiKey\", tempApiKey.join(''));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post Man Movie Title\",\n\t\"overview\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"2019-12-10T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Movie (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to POST /movies requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post Man Movie Title\",\n\t\"overview\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"2019-12-10T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Movie (Missing Field)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Movie validation failed: title: Path `title` is required.');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4770ccc4-bf74-4cde-8df5-0d78f830784c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"overview\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"2019-12-10T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Movie (Invallid Field Name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Cannot create Movie with the given properties.');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bbc467fb-ab8f-42ce-9a95-a2e51048af98",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post Man Movie Title\",\n\t\"summary\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"2019-12-10T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Movie (Invalid Content-Type)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "387a7d0f-b5ee-4d88-8df3-f72896a0b62e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Requests to POST /movies must have the following header: \\'Content-Type: application/json\\'');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e18722bc-9d08-40b2-bf50-0c2d0624cd3a",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post Man Movie Title\",\n\t\"overview\": \"This movie was created as a postman test file\",\n\t\"releaseDate\": \"2019-12-10T00:00:00.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movies (User API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()[0]).to.have.all.keys('_id', 'title', 'overview', 'releaseDate', '__v');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7db33ee0-955d-4f87-bde6-dc9417eb5d81",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movies (Root API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an array\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()[0]).to.have.all.keys('_id', 'title', 'overview', 'releaseDate', '__v');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7db33ee0-955d-4f87-bde6-dc9417eb5d81",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movies (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d4983d12-d211-4688-9597-a00672105a74",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    let tempApiKey = res.json()[0].apiKey.split('');",
+									"    tempApiKey[0] = 'a';",
+									"    tempApiKey[1] = 'b';",
+									"    pm.environment.set(\"invalidApiKey\", tempApiKey.join(''));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movies (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to GET /movies requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movie (User API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('_id', 'title', 'overview', 'releaseDate', '__v');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fc0ed1c1-4955-47ae-8872-cdc1b9c7f57e",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_movie_id\", res.json()[0]._id);",
+									"});",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/{{read_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{read_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movie (Root API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('_id', 'title', 'overview', 'releaseDate', '__v');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fc0ed1c1-4955-47ae-8872-cdc1b9c7f57e",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_movie_id\", res.json()[0]._id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/{{read_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{read_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movie (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "69acff6f-70d5-4332-a8f1-eb023f049b71",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_movie_id\", res.json()[0]._id);",
+									"});",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    let tempApiKey = res.json()[0].apiKey.split('');",
+									"    tempApiKey[0] = 'a';",
+									"    tempApiKey[1] = 'b';",
+									"    pm.environment.set(\"invalidApiKey\", tempApiKey.join(''));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/{{read_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{read_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movie (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to GET /movies requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3fff6bc3-29b9-41b4-a5cf-8d44caaad7d2",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"read_movie_id\", res.json()[0]._id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/{{read_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{read_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Movie (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('No movie found with that id');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "81def30d-84e1-4c2e-a974-2903b97c6986",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"userApiKey\", res.json()[0].apiKey);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/5df06bcaef01ea368071c111",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"5df06bcaef01ea368071c111"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Root API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check if target is an object\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage', 'movie');",
+									"});",
+									"pm.test(\"Status message correct\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.statusMessage).to.eql('Movie updated');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_movie_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"{{title}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/{{update_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{update_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_movie_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    let tempApiKey = res.json()[0].apiKey.split('');",
+									"    tempApiKey[0] = 'a';",
+									"    tempApiKey[1] = 'b';",
+									"    pm.environment.set(\"invalidApiKey\", tempApiKey.join(''));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{invalidApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"{{title}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/{{update_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{update_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Valid API Key, Wrong User)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_movie_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									"",
+									"",
+									"pm.sendRequest(`http://localhost:3000/users?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"updateUserApiKeyInvalid\", res.json()[1].apiKey);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{updateUserApiKeyInvalid}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"{{title}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/{{update_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{update_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to PATCH /movies requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_movie_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"{{title}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/{{update_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{update_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Invalid Content-Type)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Requests to PATCH /movies must have the following header: \\'Content-Type: application/json\\'');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_movie_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"{{title}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/{{update_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{update_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Invalid Date)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql(\"Cast to date failed for value \\\"wut\\\" at path \\\"releaseDate\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_movie_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"{{title}}\",\n\t\"releaseDate\": \"wut\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/{{update_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{update_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Invalid Field Name)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Cannot create Movie with the given properties.');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"update_movie_id\", res.json()[0]._id);",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"movieTitle\" : \"{{title}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/{{update_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{update_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('No movie found with that id');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1beb3f76-f979-44bc-aef6-535822bcc44c",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"const randomize = (title) => {",
+									"  let tempTitle = title.split('');",
+									"  if (tempTitle[0] < 'a') {",
+									"    tempTitle[0] = 'a';",
+									"    return tempTitle.join('');",
+									"  }",
+									"  if (tempTitle[0] > 'l') {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) - 1);",
+									"  } else if (tempTitle[0] === 'l') {",
+									"    tempTitle[0] = 'a';",
+									"  } else {",
+									"    tempTitle[0] = String.fromCharCode(title.charCodeAt(0) + 1);",
+									"  }",
+									"  return tempTitle.join('');",
+									"};",
+									"",
+									"pm.sendRequest(`http://localhost:3000/movies?apiKey=${rootApiKey}`, function (err, res) {",
+									"    pm.environment.set(\"title\", randomize(res.json()[0].title)); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\" : \"{{title}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/5df06bcaef01ea368071c111",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"5df06bcaef01ea368071c111"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Correct status message\", function () {",
+									"    var statusMessage = pm.response.json().statusMessage;",
+									"    pm.expect(statusMessage).to.eql('Movie deleted');",
+									"});",
+									"",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json().movie).to.have.all.keys('_id', 'title', 'overview', 'releaseDate', '__v');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest({",
+									"    url: `http://localhost:3000/movies?apiKey=${rootApiKey}`,",
+									"    method: 'POST',",
+									"    header: 'content-type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ ",
+									"            \"title\": \"Post Man Movie Title\",",
+									"\t        \"overview\": \"This movie was created as a postman test file\",",
+									"\t        \"releaseDate\": \"2019-12-10T00:00:00.000Z\" ",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"delete_movie_id\", res.json().movie._id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/{{delete_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{delete_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie (Invalid API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Must provide a valid API Key');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest({",
+									"    url: `http://localhost:3000/movies?apiKey=${rootApiKey}`,",
+									"    method: 'POST',",
+									"    header: 'content-type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ ",
+									"            \"title\": \"Post Man Movie Title\",",
+									"\t        \"overview\": \"This movie was created as a postman test file\",",
+									"\t        \"releaseDate\": \"2019-12-10T00:00:00.000Z\" ",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"delete_movie_id\", res.json().movie._id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{userApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/{{delete_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{delete_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie (Invalid: No API Key)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('Access to DELETE /movies requires an apiKey in the query string');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"const rootApiKey = pm.environment.get(\"rootApiKey\");",
+									"",
+									"pm.sendRequest({",
+									"    url: `http://localhost:3000/movies?apiKey=${rootApiKey}`,",
+									"    method: 'POST',",
+									"    header: 'content-type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({ ",
+									"            \"title\": \"Post Man Movie Title\",",
+									"\t        \"overview\": \"This movie was created as a postman test file\",",
+									"\t        \"releaseDate\": \"2019-12-10T00:00:00.000Z\" ",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"delete_movie_id\", res.json().movie._id);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/{{delete_movie_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"{{delete_movie_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movie (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed44956f-01fb-4947-8e56-d555632366a4",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Status Message correct\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(response.statusMessage).to.eql('No movie found with that id');",
+									"});",
+									"pm.test(\"Check if object contains all provided keys\", function () {",
+									"    pm.expect(pm.response.json()).to.have.all.keys('statusCode', 'statusMessage');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca41d191-7c10-4f03-8bf4-f3209dafdd82",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{rootApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "apiKey",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "query",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/5df841579c7a05331521e1fe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"5df841579c7a05331521e1fe"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
