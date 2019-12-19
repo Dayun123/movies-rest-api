@@ -406,3 +406,24 @@ res.status(dbResponse.statusCode).json(dbResponse.resource);
 res.status(dbResponse.statusCode).json(dbResponse);
 
 ```
+
+#### Removal of try..catch and Server Errors Caveat
+
+I noticed that all of my route-handlers had this pattern:
+
+```javascript
+
+router.method('/', async (req, res, next) => {
+  try {
+    const dbResponse = await db.query();
+    res.status(dbResponse.statusCode).json(dbResponse);
+  } catch (e) {
+    next(e);
+  }
+});
+
+```
+
+The try..catch was ostensibly looking out for server errors, but when I actually tested it (which I can't believe I hadn't done till this point) these weren't working at all. The logic would need to be a step lower in the heirarchy, in the db.js file when the database calls are made. I just removed these because I didn't want to get bogged down with this issue at the moment. The route-handlers look cleaner now, and they are no less safe than before.
+
+Since I am not handling server errors at this time, and they will blow up the server anyway if thrown from the db, I removed the app-level error-handling middleware in app.js, as it was no defense against the server going down like I thought.
