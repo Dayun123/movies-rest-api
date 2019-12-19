@@ -282,3 +282,79 @@ Got this route working, but I basically just copied and pasted code from similar
 
 Hallelujah! I finally found a pattern I like, and it seems so obvious now, for dealing with sending validation error responses. These should be run from validate.js as middleware, either stand-alone in router.use() or router.all() statements or grouped in with route-handlers at router.METHOD() routes. Before, I had error responses being created in the db.js file for a lot of validations (there's still one there, but it's one that has to be run at the DB level) that honestly didn't need to be part of the core CRUD method's responsibility. These now all live in validate.js, and the db.js and router files are much easier to follow.
 
+#### Stack Validation Middleware
+
+I've tried a few different patterns for structuring validation middleware in the route-handlers. At first, I had the validation code included in the callback of the route-handler, before the code that hit the DB:
+
+```javascript
+
+router.get('/', async (req, res, next) => {
+
+  if (!req.query.apiKey) {
+    return res.status(400).json({
+      statusCode: 400,
+      statusMessage: `Access to ${req.method} ${req.baseUrl} requires an apiKey in the query string`,
+    });
+  }
+  
+  const dbResponse = await db.read('user');
+  res.status(dbResponse.statusCode).json(dbResponse.users);
+});
+
+```
+
+This wasn't a great way to do things, so I eventually pulled the validation code into validate.validationMethod() functions and added them as middleware to router.use() or router.METHOD() calls. I was stacking the validation middleware on top of each other at first:
+
+```javascript
+
+router.use(validate.apiKeyExistsInQS);
+router.use(validate.apiKeyValid);
+
+router.get('/', async (req, res, next) => {
+  const dbResponse = await db.read('user');
+  res.status(dbResponse.statusCode).json(dbResponse.users);
+});
+
+```
+
+Then realized I should just be passing in multiple validators that run on the same router.use() call in together:
+
+```javascript
+
+router.use(validate.apiKeyExistsInQS, validate.apiKeyValid);
+
+router.get('/', async (req, res, next) => {
+  const dbResponse = await db.read('user');
+  res.status(dbResponse.statusCode).json(dbResponse.users);
+});
+
+```
+
+I was still interested in keeping the router.METHOD() signatures separate from the validation middleware though. So, if I needed to run some validation middleware on router.METHOD(), I would stack them above the router.METHOD() that handled the db call:
+
+```javascript
+
+router.post('/', validate.contentTypeJSON);
+router.post('/', validate.fieldNames);
+router.post('/', validate.resource);
+
+router.post('/', async (req, res, next) => {
+  const dbResponse = await db.create('user', req.body);
+  res.status(dbResponse.statusCode).json(dbResponse);
+});
+
+```
+
+Eventually, I realized this was silly, and that I should just add them to the router.METHOD() signature before the callback function:
+
+```javascript
+
+router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resource, async (req, res, next) => {
+  const dbResponse = await db.create('user', req.body);
+  res.status(dbResponse.statusCode).json(dbResponse);
+});
+
+```
+
+The router files look soooooooooo much cleaner now, and are easier to follow since I've made these changes in structure.
+
