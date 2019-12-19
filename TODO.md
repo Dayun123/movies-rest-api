@@ -67,9 +67,9 @@ router.get('/', async (req, res, next) => {
 
 ~~I don't have any logic in place to validate the releaseDate field when a new movie is created, this should be fixed.~~ *(turns out I did have this setup, but wasn't testing for it so I wasn't sure! That's fixed now)*
 
-## Response Objects Need A Single Point of Creation
+## ~~Response Objects Need A Single Point of Creation~~
 
-In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob/master/dev-blog.md#get-usersid) that I was unhappy with how I was handling validation and how I was returning response objects. I need to find a way that consistently sets up response objects for success or failure in the same place. Right now, sometimes it happens in validation middleware, sometimes in db.js, sometimes in the actual route-handler. I think this is confusing.
+~~In the dev blog, I noted [here](https://github.com/Dayun123/movies-rest-api/blob/master/dev-blog.md#get-usersid) that I was unhappy with how I was handling validation and how I was returning response objects. I need to find a way that consistently sets up response objects for success or failure in the same place. Right now, sometimes it happens in validation middleware, sometimes in db.js, sometimes in the actual route-handler. I think this is confusing.~~ *Fixed in a series of commits from* [commit](https://github.com/Dayun123/movies-rest-api/commit/3ad2290ac5e1bb14117874b3bfeda1a0421f14dc) *to* [commit](https://github.com/Dayun123/movies-rest-api/commit/bf1a942e4d3aa6229a3ccfdd8d4146717c76d7c1)
 
 ## ~~GET /resource/:id Pre-Request Scripts~~
 
