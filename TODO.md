@@ -90,3 +90,16 @@ router.get('/', async (req, res, next) => {
 ## Investigate PUT vs. PATCH
 
 I need to understand the difference between PUT and PATCH, and which one I should be using in this app. For now, I'm using PATCH, as it was what I used in the Udemy course, but I may change this after doing some research.
+
+## Add Caveat About Server Errors
+
+I need to add a caveat about not handling server errors to the README, or I need to find a way to handle server errors.
+
+## Add Search Functionality
+
+Want to be able to search by keyword and num_results.
+
+## Add PATCH /movies
+
+The last route-handler, should be easy.
+
