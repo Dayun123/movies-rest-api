@@ -99,7 +99,7 @@ I need to understand the difference between PUT and PATCH, and which one I shoul
 
 Want to be able to search by keyword and num_results.
 
-## Add PATCH /movies
+## ~~Add PATCH /movies~~
 
-The last route-handler, should be easy.
+~~The last route-handler, should be easy.~~ [commit](https://github.com/Dayun123/movies-rest-api/commit/0c2cab2fd6e1c2096c0bfde86712635dad14d3e9)
 
