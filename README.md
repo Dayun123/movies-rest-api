@@ -99,6 +99,8 @@ Delete a user (only works with `root` account):
 
 ## Search
 
+> *Not implemented currently, but hopefully in a future version*
+
 To search for a movie, append the `keyword` query string to the `GET /movies` route, like so:
 
 `GET http://localhost:3000/movies?apiKey=5de5e9b4-8caa-4907-a4ba-47a60fa172ae&keyword=mad+max`
