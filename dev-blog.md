@@ -358,3 +358,23 @@ router.post('/', validate.contentTypeJSON, validate.fieldNames, validate.resourc
 
 The router files look soooooooooo much cleaner now, and are easier to follow since I've made these changes in structure.
 
+#### router.param() vs. router.all() vs. router.use()
+
+I'm still learning which version of middleware handler works best for which situation. I was using router.param() for the routes with the :id parameter, and then running some middleware there, but ran into a problem because I wanted to run multiple peices of middleware, and router.param() only accepts one callback, so I had to stack router.param calls. 
+
+```javascript
+
+router.param('id', validate.id);
+router.param('id', validate.isValidUser);
+
+```
+
+Once I decided I didn't like seeing stacked router calls, I needed to find another way to structure this code. I tried using router.use('/:id'), but this led to issues because I wanted to be able to make my validators resource agnostic, so I was determining the resource type by using req.baseUrl, and router.use() doesn't behave the same as router.METHOD() or router.param() calls in this situation. The req.baseUrl call will resolve to /users or /movies when validation middleware is run in router.METHOD() or router.param(), but will resolve to /users/:id or /movies/:id when run with router.use(). This wasn't the end of the world, but I didn't want to have to have some code using req.baseUrl, and other's using a workaround, to perform the same action. router.all() to the rescue:
+
+```javascript
+
+router.all('/:id', validate.id, validate.isValidUser);
+
+```
+
+As all of the /:id routes needed the validators, it was safe to use this method. If I had a route that used /:id but didn't need these validators, I would've had to use a different pattern.
