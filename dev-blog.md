@@ -275,3 +275,10 @@ I noticed that I had hardcoded the userApiKey in my postman requests, so I creat
 #### UPDATE /users/:id
 
 Got this route working, but I basically just copied and pasted code from similar routes in the app. I always feel like this is not good when I start doing this, so I need to re-evaluate what is going on and see if I can get some of the duplication between CRUD operations down. It seems like all of the /resource/:id routes are doing a lot of similar work, so there must be a way to pull some of this out into separate functions instead of of read/create/update/delete all doing similar things. The db.js file is bad about duplication, as are the route handlers. 
+
+## 12-18-2019
+
+#### Validations Moved to Middleware
+
+Hallelujah! I finally found a pattern I like, and it seems so obvious now, for dealing with sending validation error responses. These should be run from validate.js as middleware, either stand-alone in router.use() or router.all() statements or grouped in with route-handlers at router.METHOD() routes. Before, I had error responses being created in the db.js file for a lot of validations (there's still one there, but it's one that has to be run at the DB level) that honestly didn't need to be part of the core CRUD method's responsibility. These now all live in validate.js, and the db.js and router files are much easier to follow.
+
