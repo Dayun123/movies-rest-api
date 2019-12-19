@@ -378,3 +378,31 @@ router.all('/:id', validate.id, validate.isValidUser);
 ```
 
 As all of the /:id routes needed the validators, it was safe to use this method. If I had a route that used /:id but didn't need these validators, I would've had to use a different pattern.
+
+#### Consistency in Response From Route-Handlers
+
+My route-handlers responses were a bit of a mess before. Here were some of the different patterns:
+
+```javascript
+
+res.json(dbResponse);
+res.json(users);
+res.status(dbResponse.status).json(dbResponse);
+res.status(400).json({
+  statusCode: 400,
+  statusMessage: 'Message',
+});
+res.status(dbResponse.status).json(dbResponse.user);
+
+```
+
+This inconsistency bothered me, and was ripe for bugs. Now, there are two main signatures, with a singular or pluralized resource name depending on if the route returns a single resource or array of resources:
+
+```javascript
+
+// returns a resource or array of resources to the caller
+res.status(dbResponse.statusCode).json(dbResponse.resource);
+// returns JSON with statusCode, statusMessage, and possibly resource to the caller
+res.status(dbResponse.statusCode).json(dbResponse);
+
+```
